@@ -38,7 +38,7 @@ export function Footer({ locale }: { locale: string }) {
           </div>
           <ul className="mt-3 space-y-2">
             <li>
-              <a href="https://github.com/hanflow/hanflow" target="_blank" rel="noreferrer" className="text-sm text-content-secondary hover:text-content-primary">
+              <a href="https://github.com/xpc1024/hanflow" target="_blank" rel="noreferrer" className="text-sm text-content-secondary hover:text-content-primary">
                 {t('github')}
               </a>
             </li>

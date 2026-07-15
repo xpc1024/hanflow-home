@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 const STEPS = [
   {
     key: 'clone' as const,
-    cmd: 'git clone https://github.com/hanflow/hanflow && cd hanflow',
+    cmd: 'git clone https://github.com/xpc1024/hanflow && cd hanflow',
   },
   {
     key: 'configure' as const,

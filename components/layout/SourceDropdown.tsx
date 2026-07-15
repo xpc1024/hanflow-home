@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { Github, ExternalLink } from 'lucide-react';
 
 const LINKS = [
-  { key: 'sourceGithub', href: 'https://github.com/hanflow/hanflow', Icon: Github },
+  { key: 'sourceGithub', href: 'https://github.com/xpc1024/hanflow', Icon: Github },
   { key: 'sourceGitee', href: 'https://gitee.com/easy-es/hanflow', Icon: ExternalLink },
 ];
 

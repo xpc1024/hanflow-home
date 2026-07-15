@@ -51,7 +51,7 @@ export function Hero({ locale }: { locale: string }) {
               <ArrowRight className="h-4 w-4" />
             </Link>
             <a
-              href="https://github.com/hanflow/hanflow"
+              href="https://github.com/xpc1024/hanflow"
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 rounded-full border border-edge px-5 py-2.5 text-sm font-medium text-content-primary transition-colors hover:border-edge-bright"
