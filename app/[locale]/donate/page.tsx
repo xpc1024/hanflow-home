@@ -10,9 +10,8 @@ export default async function DonatePage({
   const t = await getTranslations({ locale, namespace: 'donate' });
 
   const cards = [
-    { key: 'wechat', src: '/donate/wechat.svg' },
-    { key: 'alipay', src: '/donate/alipay.svg' },
-    { key: 'paypal', src: '/donate/paypal.svg' },
+    { key: 'wechat', src: '/donate/wx.jpg', alt: 'WeChat Pay QR' },
+    { key: 'alipay', src: '/donate/zfb.jpg', alt: 'Alipay QR' },
   ] as const;
 
   return (
@@ -22,10 +21,22 @@ export default async function DonatePage({
         <p className="mx-auto mt-4 max-w-prose text-content-secondary">{t('subtitle')}</p>
       </div>
 
-      <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
+      <div className="mt-8 rounded-card border border-edge bg-bg-elevated p-6 text-center">
+        <p className="text-base text-content-secondary">{t('message')}</p>
+      </div>
+
+      <div className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2">
         {cards.map((c) => (
           <div key={c.key} className="flex flex-col items-center rounded-card border border-edge bg-bg-elevated p-6">
-            <Image src={c.src} alt={t(c.key)} width={200} height={200} />
+            <div className="relative w-64 h-64 overflow-hidden rounded-lg">
+              <Image
+                src={c.src}
+                alt={t(c.key)}
+                fill
+                className="object-contain"
+                sizes="256px"
+              />
+            </div>
             <div className="mt-4 text-sm font-medium">{t(c.key)}</div>
           </div>
         ))}

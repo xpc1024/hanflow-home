@@ -36,33 +36,78 @@
     "eyebrow": "核心能力",
     "title": "交付智能体所需的一切。",
     "items": {
-      "canvas": { "title": "13 节点画布", "desc": "组合 Sequential、Parallel、Loop、Branch、HITL、LLM、Tool、Research、Execution、Coordinator、Memory、Subworkflow、Knowledge 节点。" },
-      "dsl": { "title": "DSL 编排", "desc": "声明式 YAML，含 depends_on、condition、retry 与节点级错误策略。无环 DAG，编译期校验。" },
-      "privacy": { "title": "隐私路由", "desc": "敏感度分级与 PII 识别把受监管负载路由到本地模型，支持硬/软强制。" },
-      "mcp": { "title": "MCP 工具总线", "desc": "统一总线，覆盖 stdio、sse、http、websocket 与进程内传输，带限流与破坏性操作保护。" },
-      "rag": { "title": "RAG 检索", "desc": "向量、全文与混合检索，含 RRF、加权、级联三种融合。可插拔嵌入与重排。" },
-      "studio": { "title": "Web Studio", "desc": "Build、Monitor、HITL 三模式。实时画布、trace 时间线与带倒计时的审批面板。" }
+      "canvas": {
+        "title": "13 节点画布",
+        "desc": "组合 Sequential、Parallel、Loop、Branch、HITL、LLM、Tool、Research、Execution、Coordinator、Memory、Subworkflow、Knowledge 节点。"
+      },
+      "dsl": {
+        "title": "DSL 编排",
+        "desc": "声明式 YAML，含 depends_on、condition、retry 与节点级错误策略。无环 DAG，编译期校验。"
+      },
+      "privacy": {
+        "title": "隐私路由",
+        "desc": "敏感度分级与 PII 识别把受监管负载路由到本地模型，支持硬/软强制。"
+      },
+      "mcp": {
+        "title": "MCP 工具总线",
+        "desc": "统一总线，覆盖 stdio、sse、http、websocket 与进程内传输，带限流与破坏性操作保护。"
+      },
+      "rag": {
+        "title": "RAG 检索",
+        "desc": "向量、全文与混合检索，含 RRF、加权、级联三种融合。可插拔嵌入与重排。"
+      },
+      "studio": {
+        "title": "Web Studio",
+        "desc": "Build、Monitor、HITL 三模式。实时画布、trace 时间线与带倒计时的审批面板。"
+      }
     }
   },
   "architecture": {
     "eyebrow": "架构",
     "title": "六层，一个运行时。",
     "layers": {
-      "l1": { "name": "L1 Delivery", "desc": "REST / WebSocket / Webhooks" },
-      "l2": { "name": "L2 Orchestration", "desc": "编译器 / 注册表 / 执行器" },
-      "l3": { "name": "L3 Capabilities", "desc": "原子能力：research / execution" },
-      "l4": { "name": "L4 Foundation", "desc": "模型 / 工具 / 检索 / 记忆" },
-      "l5": { "name": "L5 Persistence", "desc": "checkpoint / session / artifact" },
-      "l6": { "name": "L6 Observability", "desc": "trace / metrics / logs" }
+      "l1": {
+        "name": "L1 Delivery",
+        "desc": "REST / WebSocket / Webhooks"
+      },
+      "l2": {
+        "name": "L2 Orchestration",
+        "desc": "编译器 / 注册表 / 执行器"
+      },
+      "l3": {
+        "name": "L3 Capabilities",
+        "desc": "原子能力：research / execution"
+      },
+      "l4": {
+        "name": "L4 Foundation",
+        "desc": "模型 / 工具 / 检索 / 记忆"
+      },
+      "l5": {
+        "name": "L5 Persistence",
+        "desc": "checkpoint / session / artifact"
+      },
+      "l6": {
+        "name": "L6 Observability",
+        "desc": "trace / metrics / logs"
+      }
     }
   },
   "quickdemo": {
     "eyebrow": "快速演示",
     "title": "三步即可运行。",
     "steps": {
-      "clone": { "title": "克隆", "desc": "获取仓库并复制示例配置。" },
-      "configure": { "title": "配置", "desc": "在 .env 填写模型密钥。" },
-      "run": { "title": "运行", "desc": "一条命令拉起全栈。" }
+      "clone": {
+        "title": "克隆",
+        "desc": "获取仓库并复制示例配置。"
+      },
+      "configure": {
+        "title": "配置",
+        "desc": "在 .env 填写模型密钥。"
+      },
+      "run": {
+        "title": "运行",
+        "desc": "一条命令拉起全栈。"
+      }
     }
   },
   "cta": {
@@ -73,16 +118,31 @@
   "donate": {
     "title": "支持 Hanflow",
     "subtitle": "如果 Hanflow 对你有帮助，欢迎支持它的开发。",
-    "wechat": "微信",
+    "message": "Hanflow 是一个用爱发电的独立开源项目，没有融资，没有团队，只有一个老汉和一群志同道合的社区伙伴。每一颗 Star、每一个 Issue、每一行代码，都在推动它变得更好。如果它为你创造了价值，一杯咖啡的支持就能让这条路走得更远。开源不易，感恩有你。",
+    "wechat": "微信支付",
     "alipay": "支付宝",
-    "paypal": "PayPal",
     "contact": "联系方式",
-    "thanks": "感谢你的支持。"
+    "thanks": "感谢你与我们同行。"
   },
   "docs": {
     "onThisPage": "本页内容",
     "previous": "上一页",
     "next": "下一页",
     "notFound": "找不到该页面。"
+  },
+  "about": {
+    "title": "什么是 Hanflow？",
+    "tagline": "一款融合型 AI 编排框架，兼具工作流引擎的稳定与自主 Agent 的灵活——如同混动车，可纯电、纯油、或混合运行。",
+    "p1": "Hanflow（Harmony AI Nexus）是一款高可控、YAML 驱动的 Agent 框架，基于 LangGraph 构建。它将隐私模型路由、RAG 检索、人机协同审批、全链路可观测作为一等公民设计——而非事后补丁。",
+    "p2": "在 AI 自主编排逐渐成为主流的今天，基于工作流的稳定编排依然保有其不可替代的价值，尤其在 SOP 标准化场景中可靠性更高。Hanflow 不强迫你二选一：它支持纯静态工作流（Dify 式）、纯动态 Agent（DeerFlow 式）、以及混合模式——全部基于同一套 DSL，无需模式切换。",
+    "p3": "框架为自主进化而设计：Loop 驱动的系统自动发现改进机会、规划迭代、以 TDD 实现、发布新版本——每个关键节点都有人工确认门。开源，Apache-2.0 协议，为长期演进而生。",
+    "archTitle": "六层架构",
+    "l1": "三种入口：命令行 CLI、可视化画布、Python SDK。",
+    "l2": "YAML 工作流 DSL 编译为 LangGraph StateGraph。13 个原语节点，支持静态/动态递归组合。",
+    "l3": "可插拔的 Research 与 Execution 原子。引用溯源的深度研究，文件系统即记忆的任务执行。",
+    "l4": "ModelRouter 含 6 种路由策略（含隐私路由）。MCPBus 统一工具访问。多后端 RAG 检索。",
+    "l5": "Checkpoint / Session / Artifact 三级存储，支持崩溃恢复和时间旅行回放。",
+    "l6": "横切式 trace、eval、监控，LangSmith 或 OpenTelemetry 一行启用。",
+    "differentiator": "唯一在统一 DSL 下同时支持静态/动态可递归组合，且将隐私路由、RAG、HITL、LangSmith 可观测作为一等公民的高可控编排框架。"
   }
 }

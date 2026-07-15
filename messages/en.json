@@ -36,33 +36,78 @@
     "eyebrow": "Capabilities",
     "title": "Everything you need to ship agents.",
     "items": {
-      "canvas": { "title": "13-node canvas", "desc": "Compose Sequential, Parallel, Loop, Branch, HITL, LLM, Tool, Research, Execution, Coordinator, Memory, Subworkflow, and Knowledge nodes." },
-      "dsl": { "title": "DSL orchestration", "desc": "Declarative YAML with depends_on, conditions, retries, and per-node error policies. Acyclic DAG, compiled and validated." },
-      "privacy": { "title": "Privacy routing", "desc": "Sensitivity tiers and PII detection route regulated workloads to local models. Hard or soft enforcement." },
-      "mcp": { "title": "MCP tool bus", "desc": "A unified bus over stdio, sse, http, websocket, and in-process transports, with rate limiting and destructive guards." },
-      "rag": { "title": "RAG retrieval", "desc": "Vector, fulltext, and hybrid search with RRF, weighted, and cascade fusion. Pluggable embeddings and rerankers." },
-      "studio": { "title": "Web Studio", "desc": "Build, Monitor, and HITL modes. A live canvas, trace timeline, and approval panel with countdown." }
+      "canvas": {
+        "title": "13-node canvas",
+        "desc": "Compose Sequential, Parallel, Loop, Branch, HITL, LLM, Tool, Research, Execution, Coordinator, Memory, Subworkflow, and Knowledge nodes."
+      },
+      "dsl": {
+        "title": "DSL orchestration",
+        "desc": "Declarative YAML with depends_on, conditions, retries, and per-node error policies. Acyclic DAG, compiled and validated."
+      },
+      "privacy": {
+        "title": "Privacy routing",
+        "desc": "Sensitivity tiers and PII detection route regulated workloads to local models. Hard or soft enforcement."
+      },
+      "mcp": {
+        "title": "MCP tool bus",
+        "desc": "A unified bus over stdio, sse, http, websocket, and in-process transports, with rate limiting and destructive guards."
+      },
+      "rag": {
+        "title": "RAG retrieval",
+        "desc": "Vector, fulltext, and hybrid search with RRF, weighted, and cascade fusion. Pluggable embeddings and rerankers."
+      },
+      "studio": {
+        "title": "Web Studio",
+        "desc": "Build, Monitor, and HITL modes. A live canvas, trace timeline, and approval panel with countdown."
+      }
     }
   },
   "architecture": {
     "eyebrow": "Architecture",
     "title": "Six layers, one runtime.",
     "layers": {
-      "l1": { "name": "L1 Delivery", "desc": "REST, WebSocket, Webhooks" },
-      "l2": { "name": "L2 Orchestration", "desc": "Compiler, registry, executors" },
-      "l3": { "name": "L3 Capabilities", "desc": "Atoms: research, execution" },
-      "l4": { "name": "L4 Foundation", "desc": "Models, tools, retrieval, memory" },
-      "l5": { "name": "L5 Persistence", "desc": "Checkpoint, session, artifact" },
-      "l6": { "name": "L6 Observability", "desc": "Trace, metrics, logs" }
+      "l1": {
+        "name": "L1 Delivery",
+        "desc": "REST, WebSocket, Webhooks"
+      },
+      "l2": {
+        "name": "L2 Orchestration",
+        "desc": "Compiler, registry, executors"
+      },
+      "l3": {
+        "name": "L3 Capabilities",
+        "desc": "Atoms: research, execution"
+      },
+      "l4": {
+        "name": "L4 Foundation",
+        "desc": "Models, tools, retrieval, memory"
+      },
+      "l5": {
+        "name": "L5 Persistence",
+        "desc": "Checkpoint, session, artifact"
+      },
+      "l6": {
+        "name": "L6 Observability",
+        "desc": "Trace, metrics, logs"
+      }
     }
   },
   "quickdemo": {
     "eyebrow": "Quick Demo",
     "title": "Running in three steps.",
     "steps": {
-      "clone": { "title": "Clone", "desc": "Get the repo and copy the example config." },
-      "configure": { "title": "Configure", "desc": "Set your model keys in .env." },
-      "run": { "title": "Run", "desc": "Bring up the full stack with one command." }
+      "clone": {
+        "title": "Clone",
+        "desc": "Get the repo and copy the example config."
+      },
+      "configure": {
+        "title": "Configure",
+        "desc": "Set your model keys in .env."
+      },
+      "run": {
+        "title": "Run",
+        "desc": "Bring up the full stack with one command."
+      }
     }
   },
   "cta": {
@@ -73,16 +118,31 @@
   "donate": {
     "title": "Support Hanflow",
     "subtitle": "If Hanflow helps your work, consider supporting its development.",
-    "wechat": "WeChat",
+    "message": "Hanflow is an independent open-source project built with passion, not funding. Every star, every issue, and every contribution fuels its evolution. If you find it valuable, a small donation goes a long way in keeping the servers running and the coffee flowing. Open source is hard, but together we make it sustainable.",
+    "wechat": "WeChat Pay",
     "alipay": "Alipay",
-    "paypal": "PayPal",
     "contact": "Contact",
-    "thanks": "Thank you for your support."
+    "thanks": "Thank you for being part of the journey."
   },
   "docs": {
     "onThisPage": "On this page",
     "previous": "Previous",
     "next": "Next",
     "notFound": "This page could not be found."
+  },
+  "about": {
+    "title": "What is Hanflow?",
+    "tagline": "A fusion AI orchestration framework that combines the best of workflow engines and autonomous agents — like a hybrid car that runs on pure electric, pure gas, or both.",
+    "p1": "Hanflow (Harmony AI Nexus) is a high-control, YAML-driven agent framework built on LangGraph. It treats privacy-aware model routing, RAG retrieval, human-in-the-loop approval, and full-chain observability as first-class citizens — not afterthoughts.",
+    "p2": "In a world where autonomous AI agents are becoming mainstream, deterministic workflow orchestration still holds irreplaceable value for SOP-driven scenarios. Hanflow does not force you to choose: it supports pure static workflows (Dify-style), pure dynamic agents (DeerFlow-style), and hybrid compositions — all from a single unified DSL, with no mode switch.",
+    "p3": "The framework is designed for self-evolution: a Loop-driven system automatically discovers improvement opportunities, plans iterations, implements with TDD, and releases new versions — with human approval at every critical gate. Open source, Apache-2.0, built to last.",
+    "archTitle": "Six-Layer Architecture",
+    "l1": "Three entry points: command-line, visual canvas, and Python SDK.",
+    "l2": "YAML workflow DSL compiles to LangGraph StateGraph. 13 primitive node types with recursive static/dynamic composition.",
+    "l3": "Pluggable Research and Execution atoms. Citation-proven deep research and file-system-as-memory task execution.",
+    "l4": "ModelRouter with 6 strategies including privacy routing. MCPBus for unified tool access. Multi-backend RAG retrieval.",
+    "l5": "Checkpoint, session, and artifact stores with crash recovery and time-travel resume.",
+    "l6": "Cross-cutting trace, eval, and monitoring via LangSmith or OpenTelemetry. One-line enable.",
+    "differentiator": "The only framework that, under a unified DSL, supports recursive static/dynamic composition — with privacy routing, RAG, HITL, and LangSmith observability as first-class citizens."
   }
 }

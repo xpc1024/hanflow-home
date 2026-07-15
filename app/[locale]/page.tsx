@@ -1,4 +1,5 @@
 import { Hero } from '@/components/landing/Hero';
+import { About } from '@/components/landing/About';
 import { Features } from '@/components/landing/Features';
 import { Architecture } from '@/components/landing/Architecture';
 import { QuickDemo } from '@/components/landing/QuickDemo';
@@ -13,6 +14,7 @@ export default async function LocaleHomePage({
   return (
     <>
       <Hero locale={locale} />
+      <About />
       <Features />
       <Architecture />
       <QuickDemo />
