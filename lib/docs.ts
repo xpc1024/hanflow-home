@@ -48,6 +48,7 @@ const GROUP_ORDER: Record<string, LocalizedGroup> = {
   'api-reference': {
     title: { en: 'API Reference', zh: 'API 参考' },
     files: [
+      { file: 'api-reference/cli', title: { en: 'CLI Commands', zh: 'CLI 命令' } },
       { file: 'api-reference/rest', title: { en: 'REST Endpoints', zh: 'REST 端点' } },
       { file: 'api-reference/websocket', title: { en: 'WebSocket Events', zh: 'WebSocket 事件' } },
       { file: 'api-reference/webhooks', title: { en: 'Webhook Triggers', zh: 'Webhook 触发' } },
