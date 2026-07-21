@@ -2,10 +2,10 @@
 // versions get a "<version>/" prefix. Add a new version by appending here and
 // creating content/<version>/. Currently tracks the real hanflow version.
 
-export const VERSIONS = ['1.0.1', '1.1.0', '1.2.0', '1.3.0'] as const;;
+export const VERSIONS = ['1.0.1', '1.1.0', '1.2.0'] as const;
 export type Version = (typeof VERSIONS)[number];
 
-export const LATEST_VERSION: Version = '1.3.0';
+export const LATEST_VERSION: Version = '1.2.0';
 
 export function isKnownVersion(value: string): value is Version {
   return (VERSIONS as readonly string[]).includes(value);
