@@ -1,0 +1,37 @@
+# Error Codes
+
+All Hanflow errors extend `HanflowError` with a stable `code`, a `retryable`
+flag, and optional `run_id`, `node_id`, `span_id`, and `details`.
+
+| Code | Class | Retryable |
+| --- | --- | --- |
+| `DSL_INVALID` | `DSLValidationError` | no |
+| `COMPILE_FAILED` | `CompileError` | no |
+| `NODE_FAILED` | `NodeExecutionError` | no |
+| `MAX_ITER` | `MaxIterationsExceeded` | no |
+| `HITL_TIMEOUT` | `HITLTimeoutError` | no |
+| `MODEL_TIMEOUT` | `ModelTimeoutError` | yes |
+| `MODEL_RATE_LIMIT` | `RateLimitError` | yes |
+| `BUDGET_EXCEEDED` | `BudgetExceededError` | no |
+| `PRIVACY_VIOLATION` | `PrivacyViolationError` | no |
+| `TOOL_TIMEOUT` | `ToolTimeoutError` | yes |
+| `MCP_CONN_FAILED` | `MCPConnectionError` | yes |
+| `CHECKPOINT_CORRUPT` | `CheckpointCorruptError` | no |
+| `DELEGATE_DEPTH` | `MaxDelegateDepthExceeded` | no |
+| `SUBWORKFLOW_DEPTH` | `MaxSubworkflowDepthExceeded` | no |
+| `CONFIG_INVALID` | `ConfigValidationError` | no |
+
+## Shape
+
+```json
+{
+  "code": "PRIVACY_VIOLATION",
+  "message": "no local provider available",
+  "retryable": false,
+  "run_id": "run_01H...",
+  "node_id": "llm_03cb",
+  "details": { "sensitivity": "restricted" }
+}
+```
+
+Retryable errors are candidates for the `retry` policy and fallback chain.

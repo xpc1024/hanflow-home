@@ -1,0 +1,31 @@
+# 模型路由
+
+路由器为每次 LLM 调用挑选模型。策略按优先级 `privacy > role > task > cost > static`
+运行，得分最高的候选胜出。
+
+## 六种策略
+
+| 策略 | 得分 | 行为 |
+| --- | --- | --- |
+| `privacy` | inf | 敏感度高或存在 PII 时硬否决到本地 provider |
+| `role` | 50 | 按角色（planner / researcher / coder）映射模型 |
+| `task` | 40 | 按任务类型（reasoning / coding / vision）映射模型 |
+| `cost` | 30 | 按预算档位挑选 |
+| `static` | 100 | 遵守显式 `prefer` |
+| `fallback` | - | 失败时的韧性链，非路由策略 |
+
+## 隐私路由
+
+敏感度分级：`public`、`internal`、`confidential`、`restricted`。当敏感度为
+`confidential` 及以上，或检测到 PII（email、phone、id card、card），只有
+`is_local` 的 provider 可用。
+
+- `enforce: hard`：无本地 provider 时抛 `PRIVACY_VIOLATION`
+- `enforce: soft`：回退到下一策略
+
+PII 在调用前以 `<<kind:hex>>` 占位符脱敏，调用后按 `RedactionMap` 还原。
+
+## 兜底
+
+兜底不是路由策略。仅当主 provider 失败后才激活，按 `routing.fallback_chain`
+顺序尝试。

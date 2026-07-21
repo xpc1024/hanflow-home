@@ -1,0 +1,25 @@
+# Webhook 触发
+
+用 HTTP webhook 从外部系统触发工作流。
+
+## 配置
+
+在 workflow metadata 下添加触发 token：
+
+```yaml
+metadata:
+  triggers:
+    - token: "secret-token"
+      enabled: true
+      label: "CI hook"
+```
+
+## 触发
+
+```bash
+curl -X POST http://localhost:8000/api/webhooks/{workflow_id}/{token}
+```
+
+- 端点用信号量限制 10 个并发触发。
+- 满时返回 `429 Too Many Requests`。
+- `enabled: false` 可停用触发而不删除。

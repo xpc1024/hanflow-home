@@ -1,0 +1,45 @@
+# REST 端点
+
+Base URL：`http://localhost:8000`。交互式文档在 `/docs`。
+
+## 健康
+
+| 方法 | 路径 | 用途 |
+| --- | --- | --- |
+| `GET` | `/api/health` | 健康检查 |
+
+## Schema
+
+| 方法 | 路径 | 用途 |
+| --- | --- | --- |
+| `GET` | `/api/schema/dsl` | 完整 WorkflowDSL JSON Schema |
+| `GET` | `/api/schema/node/{node_type}` | 每个节点的 config、默认值、输出、校验 |
+
+## 工作流
+
+| 方法 | 路径 | 用途 |
+| --- | --- | --- |
+| `GET` | `/api/workflows` | 列出工作流 |
+| `POST` | `/api/workflows` | 创建（id 重复返 409） |
+| `GET` `PUT` `DELETE` | `/api/workflows/{id}` | 读、更新、删除 |
+| `POST` | `/api/workflows/validate` | 校验 YAML body |
+| `POST` | `/api/workflows/{id}/dry-run` | 带 mock 输出的 SSE dry-run |
+
+## 运行
+
+| 方法 | 路径 | 用途 |
+| --- | --- | --- |
+| `POST` | `/api/runs` | 启动运行（经 WebSocket 流式） |
+| `GET` | `/api/runs` | 列出运行 |
+| `GET` | `/api/runs/{id}` | 查看一个运行 |
+| `DELETE` | `/api/runs/{id}` | 取消 |
+
+## HITL 与 observe
+
+| 方法 | 路径 | 用途 |
+| --- | --- | --- |
+| `GET` | `/api/hitl/pending` | 待处理闸门 |
+| `GET` | `/api/hitl/history` | 决策历史 |
+| `POST` | `/api/runs/{id}/{approve\|edit\|reject\|reroute}` | HITL 决策 |
+| `GET` | `/api/runs/{id}/trace` | trace 树 |
+| `GET` | `/api/runs/{id}/artifacts` | 列出产物 |

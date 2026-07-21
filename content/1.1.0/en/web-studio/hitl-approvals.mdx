@@ -1,0 +1,24 @@
+# HITL Approvals
+
+The approvals panel lists pending human gates and polls every 30 seconds. Each
+card shows the gate title, description, optional form, and a countdown.
+
+## Four actions
+
+| Action | Effect |
+| --- | --- |
+| `approve` | Resume the run |
+| `edit` | Patch inputs and resume |
+| `reject` | Take the reject branch or fail |
+| `reroute` | Send to another node or model |
+
+## Countdown
+
+Each gate has a `timeout_seconds`. The countdown changes phase color as the
+deadline approaches. On timeout the run raises `HITL_TIMEOUT`.
+
+## Endpoints
+
+- `GET /api/hitl/pending` lists pending gates
+- `GET /api/hitl/history` lists decisions
+- `POST /api/runs/{id}/{approve|edit|reject|reroute}` submits a decision

@@ -1,0 +1,19 @@
+# Monitor Mode
+
+Monitor mode watches a run in real time. The canvas is read-only, and a right
+events log streams RunEvents over WebSocket.
+
+## Real-time stream
+
+Subscribe to `WS /api/runs/{run_id}/stream`. Events update node status live:
+`node_start`, `node_end`, `llm_token`, `tool_call`, and `error`.
+
+## Actions
+
+- **Cancel** sends `DELETE /api/runs/{id}` to stop the run.
+- **Edit a copy** opens the workflow in Build mode for iteration.
+
+## Trace
+
+After a run, open the trace tree via `GET /api/runs/{id}/trace` and download
+artifacts via `GET /api/runs/{id}/artifacts`.

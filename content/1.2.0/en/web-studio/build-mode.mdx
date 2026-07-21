@@ -1,0 +1,27 @@
+# Build Mode
+
+Build mode is the workflow editor. The shell is `TopBar`, a left `NodePalette`,
+a center `WorkflowCanvas`, and a right `InspectorPanel`.
+
+## Drag and drop
+
+Drag a node from the palette (groups: control, leaf, dynamic, state, retrieval)
+onto the canvas. Connect ports to form a DAG. The canvas persists positions into
+`metadata.canvas.positions`.
+
+## Inspector
+
+Selecting a node opens the Inspector with a typed form (String, Number, Boolean,
+Enum, Array, Object, Template) generated from the node config schema.
+
+## Validate and dry-run
+
+- **Validate** runs the same six rules as the compiler and surfaces structured
+  errors inline.
+- **Dry-run** streams mock outputs per node via an SSE endpoint so you can see
+  the shape of execution without real model calls.
+
+## Save and dirty guard
+
+Save persists the workflow to `/api/workflows`. Unsaved changes trigger a dirty
+guard with a `beforeunload` prompt.

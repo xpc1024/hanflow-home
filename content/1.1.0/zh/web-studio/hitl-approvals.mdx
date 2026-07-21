@@ -1,0 +1,24 @@
+# HITL 审批
+
+审批面板列出待处理的人工闸门，每 30 秒轮询一次。每张卡片含闸门标题、描述、可选表单
+与倒计时。
+
+## 四种动作
+
+| 动作 | 效果 |
+| --- | --- |
+| `approve` | 恢复运行 |
+| `edit` | 修改输入后恢复 |
+| `reject` | 走 reject 分支或失败 |
+| `reroute` | 转到另一节点或模型 |
+
+## 倒计时
+
+每个闸门有 `timeout_seconds`。倒计时随截止临近切换阶段色。超时则运行抛
+`HITL_TIMEOUT`。
+
+## 端点
+
+- `GET /api/hitl/pending` 列出待处理闸门
+- `GET /api/hitl/history` 列出历史决策
+- `POST /api/runs/{id}/{approve|edit|reject|reroute}` 提交决策

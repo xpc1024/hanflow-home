@@ -1,0 +1,19 @@
+# Monitor 模式
+
+Monitor 模式实时观察一次运行。画布只读，右侧事件日志通过 WebSocket 流式接收
+RunEvent。
+
+## 实时流
+
+订阅 `WS /api/runs/{run_id}/stream`。事件实时更新节点状态：`node_start`、
+`node_end`、`llm_token`、`tool_call`、`error`。
+
+## 操作
+
+- **Cancel** 发送 `DELETE /api/runs/{id}` 停止运行。
+- **Edit a copy** 在 Build 模式打开工作流进行迭代。
+
+## Trace
+
+运行结束后，用 `GET /api/runs/{id}/trace` 打开 trace 树，用
+`GET /api/runs/{id}/artifacts` 下载产物。

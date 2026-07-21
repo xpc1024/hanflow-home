@@ -1,0 +1,50 @@
+# DSL Syntax
+
+Workflows are declared as YAML. A file may be wrapped under a `workflow:` key,
+which is unwrapped automatically. The compiler enforces an acyclic DAG with a
+single entry node.
+
+## Top-level
+
+```yaml
+name: my-flow
+version: "1.1.0"
+description: An example workflow
+inputs: { goal: "write a hello world" }
+nodes: [...]
+outputs: { result: "{{approve.output}}" }
+metadata: { tags: [prod] }
+```
+
+## Node fields
+
+| Field | Purpose |
+| --- | --- |
+| `id` | Unique node id |
+| `type` | One of the 13 node types |
+| `depends_on` | Upstream node ids (DAG edges) |
+| `config` | Node-specific config (validated by schema) |
+| `condition` | Per-node guard expression |
+| `on_error` | `abort` / `retry` / `skip` / `fallback_branch` / `delegate_replan` |
+| `retry` | Retry policy |
+| `timeout_seconds` | Per-node timeout |
+| `sensitivity` | `public` / `internal` / `confidential` / `restricted` |
+| `disabled` | Skip the node |
+
+## Compile-time checks
+
+- Unique node ids
+- `depends_on` targets exist
+- The graph is an acyclic DAG (DFS coloring)
+- Exactly one entry node (no `depends_on`)
+- Node types are in the closed set of 13
+- `{{node_id.field}}` template references resolve to real node ids
+
+## depends_on and condition
+
+```yaml
+- id: b
+  type: Tool
+  depends_on: [a]
+  condition: "a.output.score > 0.5"
+```

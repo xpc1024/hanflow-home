@@ -1,0 +1,37 @@
+# 错误码
+
+所有 Hanflow 错误继承 `HanflowError`，带稳定的 `code`、`retryable` 标志，以及可选的
+`run_id`、`node_id`、`span_id`、`details`。
+
+| code | 类 | 可重试 |
+| --- | --- | --- |
+| `DSL_INVALID` | `DSLValidationError` | 否 |
+| `COMPILE_FAILED` | `CompileError` | 否 |
+| `NODE_FAILED` | `NodeExecutionError` | 否 |
+| `MAX_ITER` | `MaxIterationsExceeded` | 否 |
+| `HITL_TIMEOUT` | `HITLTimeoutError` | 否 |
+| `MODEL_TIMEOUT` | `ModelTimeoutError` | 是 |
+| `MODEL_RATE_LIMIT` | `RateLimitError` | 是 |
+| `BUDGET_EXCEEDED` | `BudgetExceededError` | 否 |
+| `PRIVACY_VIOLATION` | `PrivacyViolationError` | 否 |
+| `TOOL_TIMEOUT` | `ToolTimeoutError` | 是 |
+| `MCP_CONN_FAILED` | `MCPConnectionError` | 是 |
+| `CHECKPOINT_CORRUPT` | `CheckpointCorruptError` | 否 |
+| `DELEGATE_DEPTH` | `MaxDelegateDepthExceeded` | 否 |
+| `SUBWORKFLOW_DEPTH` | `MaxSubworkflowDepthExceeded` | 否 |
+| `CONFIG_INVALID` | `ConfigValidationError` | 否 |
+
+## 形态
+
+```json
+{
+  "code": "PRIVACY_VIOLATION",
+  "message": "no local provider available",
+  "retryable": false,
+  "run_id": "run_01H...",
+  "node_id": "llm_03cb",
+  "details": { "sensitivity": "restricted" }
+}
+```
+
+可重试错误是 `retry` 策略与兜底链的候选。

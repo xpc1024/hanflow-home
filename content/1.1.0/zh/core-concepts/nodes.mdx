@@ -1,0 +1,51 @@
+# 13 个原子节点
+
+工作流由 13 种节点组合而成。每个节点声明 `type`、`id`、`depends_on` 边列表，
+以及一个按 JSON Schema 校验的 `config` 块。
+
+## 控制节点
+
+| 节点 | 关键配置 | 行为 |
+| --- | --- | --- |
+| `Sequential` | （结构） | 顺序链的连接节点 |
+| `Parallel` | `join`（all / any / first_n）、`n` | 扇出后合并 |
+| `Loop` | `max_iterations`（1-1000）、`condition`、`body` | 迭代子图 |
+| `Branch` | `cases`（映射）、`default` | 按表达式分流 |
+| `HITL` | `actions`（approve / edit / reject / reroute）、`timeout_seconds` | 暂停等人 |
+
+## 叶子节点
+
+| 节点 | 关键配置 | 行为 |
+| --- | --- | --- |
+| `LLM` | `template` 或 `prompt`、`model`、`role` | 调用模型 |
+| `Tool` | `tool`（`server.tool`）、`args` | 调用 MCP 工具 |
+| `Research` | `query`、`depth`（quick / standard / deep）、`max_sources` | 搜集来源 |
+| `Execution` | `task`、`sandbox`（docker / firecracker / none）、`max_steps` | 执行 agent 任务 |
+
+## 动态与状态节点
+
+| 节点 | 关键配置 | 行为 |
+| --- | --- | --- |
+| `Coordinator` | `sub_agents`、`planning_model`、`plan_hitl`、`max_iterations` | 规划与委派 |
+| `Memory` | `action`（read / write / update / delete / summarize）、`key` | 管理记忆 |
+| `Subworkflow` | `ref`、`inputs`、`version`、`timeout_seconds` | 调用另一工作流 |
+| `Knowledge` | `store`、`query`、`top_k`、`rerank`、`min_score` | 从 store 检索 |
+
+## 示例
+
+```yaml
+nodes:
+  - id: plan
+    type: LLM
+    config: { role: planner, template: "Draft a plan for {{input.goal}}" }
+  - id: search
+    type: Research
+    depends_on: [plan]
+    config: { query: "{{plan.output}}", depth: standard }
+  - id: approve
+    type: HITL
+    depends_on: [search]
+    config: { actions: [approve, reject], timeout_seconds: 3600 }
+```
+
+每个节点还可设置 `condition`、`on_error`、`retry`、`timeout_seconds`、`sensitivity`、`disabled`。

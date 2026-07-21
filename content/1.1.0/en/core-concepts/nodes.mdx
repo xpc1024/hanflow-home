@@ -1,0 +1,52 @@
+# 13 Primitive Nodes
+
+Workflows are composed from 13 node types. Each node declares a `type`, an `id`,
+a `depends_on` edge list, and a `config` block validated against a JSON Schema.
+
+## Control nodes
+
+| Node | Key config | Behavior |
+| --- | --- | --- |
+| `Sequential` | (structural) | Wiring node for ordered chains |
+| `Parallel` | `join` (all / any / first_n), `n` | Fan-out then join |
+| `Loop` | `max_iterations` (1-1000), `condition`, `body` | Iterate a sub-graph |
+| `Branch` | `cases` (map), `default` | Route by expression |
+| `HITL` | `actions` (approve / edit / reject / reroute), `timeout_seconds` | Pause for a human |
+
+## Leaf nodes
+
+| Node | Key config | Behavior |
+| --- | --- | --- |
+| `LLM` | `template` or `prompt`, `model`, `role` | Call a model |
+| `Tool` | `tool` (`server.tool`), `args` | Call an MCP tool |
+| `Research` | `query`, `depth` (quick / standard / deep), `max_sources` | Gather sources |
+| `Execution` | `task`, `sandbox` (docker / firecracker / none), `max_steps` | Run an agent task |
+
+## Dynamic and state nodes
+
+| Node | Key config | Behavior |
+| --- | --- | --- |
+| `Coordinator` | `sub_agents`, `planning_model`, `plan_hitl`, `max_iterations` | Plan and delegate |
+| `Memory` | `action` (read / write / update / delete / summarize), `key` | Manage memory |
+| `Subworkflow` | `ref`, `inputs`, `version`, `timeout_seconds` | Call another workflow |
+| `Knowledge` | `store`, `query`, `top_k`, `rerank`, `min_score` | Retrieve from a store |
+
+## Example
+
+```yaml
+nodes:
+  - id: plan
+    type: LLM
+    config: { role: planner, template: "Draft a plan for {{input.goal}}" }
+  - id: search
+    type: Research
+    depends_on: [plan]
+    config: { query: "{{plan.output}}", depth: standard }
+  - id: approve
+    type: HITL
+    depends_on: [search]
+    config: { actions: [approve, reject], timeout_seconds: 3600 }
+```
+
+Every node also accepts `condition`, `on_error`, `retry`, `timeout_seconds`,
+`sensitivity`, and `disabled`.

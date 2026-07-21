@@ -1,0 +1,59 @@
+# 控制流
+
+Hanflow 用五种控制结构组合原子控制节点。
+
+## 顺序
+
+通过 `depends_on` 表达的链。唯一入口节点先跑，再依次执行后继。
+
+## 并行
+
+扇出到多个节点再合并。`join` 决定合并行为：
+
+- `all`：等待所有分支
+- `any`：首个完成即结束
+- `first_n`：前 `n` 个完成即结束
+
+```yaml
+- id: fan
+  type: Parallel
+  config: { join: all }
+- id: a
+  type: LLM
+  depends_on: [fan]
+- id: b
+  type: LLM
+  depends_on: [fan]
+```
+
+## 循环
+
+在 `condition` 成立时，最多迭代 `max_iterations` 次 body 子图。
+
+```yaml
+- id: refine
+  type: Loop
+  config:
+    max_iterations: 5
+    condition: "{{quality.ok}}"
+    body: [draft, critique]
+```
+
+## 分支
+
+按 cases 映射分流，带 `default` 兜底。
+
+```yaml
+- id: route
+  type: Branch
+  config:
+    cases:
+      "{{input.kind == 'code'}}": [coder]
+      "{{input.kind == 'research'}}": [researcher]
+    default: [generic]
+```
+
+## 人工介入
+
+`HITL` 暂停图，等待 `approve`、`edit`、`reject` 或 `reroute` 之一，可选
+`timeout_seconds`，超时触发 `HITL_TIMEOUT`。
