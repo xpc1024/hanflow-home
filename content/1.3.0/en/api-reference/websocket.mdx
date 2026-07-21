@@ -1,0 +1,30 @@
+# WebSocket Events
+
+Subscribe to a run with `WS /api/runs/{run_id}/stream`. The server publishes
+RunEvents; a final `{ "__done__": true }` marker closes the socket.
+
+## RunEvent
+
+```json
+{
+  "kind": "node_end",
+  "node_id": "search",
+  "data": { "output": { "sources": [] } }
+}
+```
+
+## Eight event kinds
+
+| Kind | Meaning |
+| --- | --- |
+| `node_start` | A node began executing |
+| `node_end` | A node finished |
+| `llm_token` | A streamed LLM token |
+| `tool_call` | An MCP tool was called |
+| `hitl_paused` | The run paused at a gate |
+| `hitl_resumed` | The run resumed after a decision |
+| `artifact_created` | An artifact was produced |
+| `error` | An error occurred |
+
+`node_id` is optional and present when the event is scoped to a node. `data` is
+a free-form object.

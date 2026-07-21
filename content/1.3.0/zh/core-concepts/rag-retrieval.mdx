@@ -1,0 +1,34 @@
+# RAG 检索
+
+三种检索 provider 共享同一 `SearchProvider` 接口：向量、全文、混合。均返回带
+`Source` 来源的 chunk。
+
+## Provider
+
+- **向量**：嵌入查询，检索向量库，返回最近邻
+- **全文**：基于全文索引的关键词检索
+- **混合**：向量与全文并行，融合结果
+
+## 混合融合
+
+| 策略 | 行为 |
+| --- | --- |
+| `rrf` | 倒数排名融合（默认，k=60） |
+| `weighted` | w_v * norm(vec) + w_f * norm(ft) |
+| `cascade` | 全文召回，向量重排 |
+
+## 嵌入与重排
+
+嵌入：`fake`、OpenAI `text-embedding-3-small`、`bge-m3`（本地 HTTP）、Ollama
+`nomic-embed-text`（本地）。重排：`fake`、Cohere、`bge-reranker-v2-m3`。
+
+## 索引
+
+索引管道按 `ChunkStrategy`（`recursive`、`token`、`sentence`、`markdown`、`none`）
+切分文档，并以 `index_sync`（`dual`、`vector_only`、`fulltext_only`）写入。
+
+```bash
+hanflow index my-store ./docs
+```
+
+`Knowledge` 节点通过 `ctx.retrieve(store, query, top_k, rerank, filter)` 消费检索。

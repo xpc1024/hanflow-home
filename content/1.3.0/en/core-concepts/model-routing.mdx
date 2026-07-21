@@ -1,0 +1,32 @@
+# Model Routing
+
+The router picks a model for each LLM call. Strategies run in priority order
+`privacy > role > task > cost > static`, and the highest-scoring candidate wins.
+
+## Six strategies
+
+| Strategy | Score | Behavior |
+| --- | --- | --- |
+| `privacy` | inf | Hard veto to local providers when sensitivity is high or PII is present |
+| `role` | 50 | Map role (planner / researcher / coder) to a model |
+| `task` | 40 | Map task type (reasoning / coding / vision) to a model |
+| `cost` | 30 | Pick by budget tier |
+| `static` | 100 | Honor an explicit `prefer` |
+| `fallback` | - | Resilience chain on failure, not a routing strategy |
+
+## Privacy routing
+
+Sensitivity tiers: `public`, `internal`, `confidential`, `restricted`. When
+sensitivity is `confidential` or higher, or PII (email, phone, id card, card)
+is detected, only `is_local` providers are eligible.
+
+- `enforce: hard` raises `PRIVACY_VIOLATION` if no local provider exists
+- `enforce: soft` falls back to the next strategy
+
+PII is redacted with `<<kind:hex>>` placeholders before the call and restored
+afterward, using a `RedactionMap`.
+
+## Fallback
+
+Fallback is not a routing strategy. It activates only after the primary provider
+fails, walking `routing.fallback_chain` in order.

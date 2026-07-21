@@ -1,0 +1,45 @@
+# REST Endpoints
+
+Base URL: `http://localhost:8000`. Interactive docs at `/docs`.
+
+## Health
+
+| Method | Path | Purpose |
+| --- | --- | --- |
+| `GET` | `/api/health` | Health check |
+
+## Schema
+
+| Method | Path | Purpose |
+| --- | --- | --- |
+| `GET` | `/api/schema/dsl` | Full WorkflowDSL JSON Schema |
+| `GET` | `/api/schema/node/{node_type}` | Config, default, output, validation per node |
+
+## Workflows
+
+| Method | Path | Purpose |
+| --- | --- | --- |
+| `GET` | `/api/workflows` | List workflows |
+| `POST` | `/api/workflows` | Create (409 on duplicate id) |
+| `GET` `PUT` `DELETE` | `/api/workflows/{id}` | Read, update, delete |
+| `POST` | `/api/workflows/validate` | Validate a YAML body |
+| `POST` | `/api/workflows/{id}/dry-run` | SSE dry-run with mock outputs |
+
+## Runs
+
+| Method | Path | Purpose |
+| --- | --- | --- |
+| `POST` | `/api/runs` | Start a run (streams via WebSocket) |
+| `GET` | `/api/runs` | List runs |
+| `GET` | `/api/runs/{id}` | Get one run |
+| `DELETE` | `/api/runs/{id}` | Cancel |
+
+## HITL and observe
+
+| Method | Path | Purpose |
+| --- | --- | --- |
+| `GET` | `/api/hitl/pending` | Pending gates |
+| `GET` | `/api/hitl/history` | Decision history |
+| `POST` | `/api/runs/{id}/{approve\|edit\|reject\|reroute}` | HITL decision |
+| `GET` | `/api/runs/{id}/trace` | Trace tree |
+| `GET` | `/api/runs/{id}/artifacts` | List artifacts |

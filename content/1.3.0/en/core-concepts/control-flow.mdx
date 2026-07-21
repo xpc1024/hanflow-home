@@ -1,0 +1,60 @@
+# Control Flow
+
+Hanflow composes five control structures from the primitive control nodes.
+
+## Sequential
+
+A chain expressed by `depends_on`. The single entry node runs first, then each
+successor.
+
+## Parallel
+
+Fan out to multiple nodes and join. `join` selects the merge behavior:
+
+- `all`: wait for every branch
+- `any`: complete on the first branch that finishes
+- `first_n`: complete on the first `n` branches
+
+```yaml
+- id: fan
+  type: Parallel
+  config: { join: all }
+- id: a
+  type: LLM
+  depends_on: [fan]
+- id: b
+  type: LLM
+  depends_on: [fan]
+```
+
+## Loop
+
+Re-run a body sub-graph up to `max_iterations` while `condition` holds.
+
+```yaml
+- id: refine
+  type: Loop
+  config:
+    max_iterations: 5
+    condition: "{{quality.ok}}"
+    body: [draft, critique]
+```
+
+## Branch
+
+Route by a cases map with a `default` fallback.
+
+```yaml
+- id: route
+  type: Branch
+  config:
+    cases:
+      "{{input.kind == 'code'}}": [coder]
+      "{{input.kind == 'research'}}": [researcher]
+    default: [generic]
+```
+
+## Human-in-the-loop
+
+`HITL` pauses the graph and waits for one of `approve`, `edit`, `reject`, or
+`reroute`, with an optional `timeout_seconds` that triggers `HITL_TIMEOUT`.

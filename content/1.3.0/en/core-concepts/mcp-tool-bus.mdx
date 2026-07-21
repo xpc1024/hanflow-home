@@ -1,0 +1,42 @@
+# MCP Tool Bus
+
+The bus resolves a `server.tool` name, routes to a connection, validates args
+against the input schema, applies a per-server rate limit, opens a trace span,
+and calls. Retries happen on failure unless the tool is annotated `destructive`.
+
+## Transports
+
+| Transport | Use |
+| --- | --- |
+| `stdio` | Local subprocess |
+| `sse` | Server-sent events |
+| `http` | HTTP request/response |
+| `websocket` | Bidirectional |
+| `inprocess` | Built-in server, no network |
+
+## Built-in servers
+
+Hanflow ships seven built-in MCP servers: `code_exec`, `filesystem`,
+`http_request`, `shell`, `vector_search`, `web_fetch`, `web_search`. The default
+config wires `web_search` as in-process.
+
+```yaml
+mcp_servers:
+  web_search: { transport: inprocess }
+  filesystem:
+    transport: stdio
+    command: node
+    args: ["./mcp/fs-server.js"]
+```
+
+## Calling a tool
+
+```yaml
+- id: search
+  type: Tool
+  config:
+    tool: web_search.search
+    args: { query: "{{input.q}}" }
+```
+
+Tool names must be in `server.tool` form. Destructive tools are not retried.

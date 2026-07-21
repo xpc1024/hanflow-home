@@ -1,0 +1,36 @@
+# RAG Retrieval
+
+Three search providers share one `SearchProvider` interface: vector, fulltext,
+and hybrid. All return chunks with a `Source` for provenance.
+
+## Providers
+
+- **Vector**: embed the query, search a vector store, return nearest neighbors
+- **Fulltext**: keyword search over a fulltext index
+- **Hybrid**: run vector and fulltext in parallel, fuse the results
+
+## Hybrid fusion
+
+| Strategy | Behavior |
+| --- | --- |
+| `rrf` | Reciprocal Rank Fusion (default, k=60) |
+| `weighted` | w_v * norm(vec) + w_f * norm(ft) |
+| `cascade` | Fulltext recall, then vector rerank |
+
+## Embeddings and rerankers
+
+Embeddings: `fake`, OpenAI `text-embedding-3-small`, `bge-m3` (local HTTP),
+Ollama `nomic-embed-text` (local). Rerankers: `fake`, Cohere, `bge-reranker-v2-m3`.
+
+## Indexing
+
+The indexing pipeline splits documents with a `ChunkStrategy` (`recursive`,
+`token`, `sentence`, `markdown`, `none`) and writes with an `index_sync` mode
+(`dual`, `vector_only`, `fulltext_only`).
+
+```bash
+hanflow index my-store ./docs
+```
+
+The `Knowledge` node consumes retrieval through `ctx.retrieve(store, query,
+top_k, rerank, filter)`.

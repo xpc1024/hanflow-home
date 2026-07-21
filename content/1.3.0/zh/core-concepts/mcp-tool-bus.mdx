@@ -1,0 +1,41 @@
+# MCP 工具总线
+
+总线解析 `server.tool` 名，路由到连接，按 input schema 校验参数，施加每服务限流，
+开启 trace span，然后调用。失败时重试，除非工具标注为 `destructive`。
+
+## 传输
+
+| 传输 | 用途 |
+| --- | --- |
+| `stdio` | 本地子进程 |
+| `sse` | Server-Sent Events |
+| `http` | HTTP 请求/响应 |
+| `websocket` | 双向 |
+| `inprocess` | 内置服务，无网络 |
+
+## 内置服务
+
+Hanflow 自带七个内置 MCP 服务：`code_exec`、`filesystem`、`http_request`、
+`shell`、`vector_search`、`web_fetch`、`web_search`。默认配置把 `web_search`
+装配为进程内。
+
+```yaml
+mcp_servers:
+  web_search: { transport: inprocess }
+  filesystem:
+    transport: stdio
+    command: node
+    args: ["./mcp/fs-server.js"]
+```
+
+## 调用工具
+
+```yaml
+- id: search
+  type: Tool
+  config:
+    tool: web_search.search
+    args: { query: "{{input.q}}" }
+```
+
+工具名必须为 `server.tool` 形式。破坏性工具不重试。

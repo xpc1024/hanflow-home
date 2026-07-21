@@ -1,0 +1,29 @@
+# WebSocket 事件
+
+用 `WS /api/runs/{run_id}/stream` 订阅一次运行。服务端推送 RunEvent，最后以
+`{ "__done__": true }` 标记关闭连接。
+
+## RunEvent
+
+```json
+{
+  "kind": "node_end",
+  "node_id": "search",
+  "data": { "output": { "sources": [] } }
+}
+```
+
+## 八种事件
+
+| kind | 含义 |
+| --- | --- |
+| `node_start` | 节点开始执行 |
+| `node_end` | 节点结束 |
+| `llm_token` | 流式 LLM token |
+| `tool_call` | 调用了 MCP 工具 |
+| `hitl_paused` | 运行在闸门处暂停 |
+| `hitl_resumed` | 决策后恢复运行 |
+| `artifact_created` | 产生了一个产物 |
+| `error` | 发生错误 |
+
+`node_id` 可选，仅在事件属于某节点时存在。`data` 为自由对象。

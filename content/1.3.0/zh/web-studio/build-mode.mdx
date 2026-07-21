@@ -1,0 +1,24 @@
+# Build 模式
+
+Build 模式是工作流编辑器。外壳为 `TopBar`、左侧 `NodePalette`、中间
+`WorkflowCanvas`、右侧 `InspectorPanel`。
+
+## 拖拽
+
+从 palette（分组：control、leaf、dynamic、state、retrieval）拖节点到画布，连接端口
+组成 DAG。画布把位置持久化到 `metadata.canvas.positions`。
+
+## Inspector
+
+选中节点后 Inspector 显示按节点 config schema 生成的类型化表单（String、Number、
+Boolean、Enum、Array、Object、Template）。
+
+## 校验与 Dry-run
+
+- **Validate** 运行与编译器相同的六条规则，并以结构化错误内联展示。
+- **Dry-run** 通过 SSE 端点按节点流式输出 mock 结果，无需真实模型调用即可观察执行形态。
+
+## 保存与 dirty 守卫
+
+保存把工作流写入 `/api/workflows`。未保存改动会触发 dirty 守卫，带 `beforeunload`
+离开提示。
