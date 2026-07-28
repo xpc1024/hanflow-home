@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { CanvasNodeMockup } from '../components/docs/canvas/CanvasNodeMockup';
 import { NodePaletteMockup } from '../components/docs/canvas/NodePaletteMockup';
+import { CanvasMockup } from '../components/docs/canvas/CanvasMockup';
 
 describe('CanvasNodeMockup', () => {
   it('renders type label and summary lines', () => {
@@ -35,5 +36,19 @@ describe('NodePaletteMockup', () => {
     // highlighted item uses accent-glow background
     const glow = container.querySelector('[style*="accent-glow"]');
     expect(glow).not.toBeNull();
+  });
+});
+
+describe('CanvasMockup', () => {
+  it('renders all sample nodes in rich workflow', () => {
+    render(<CanvasMockup workflow="rich" />);
+    expect(screen.getByText('router')).toBeInTheDocument();
+    expect(screen.getByText('approve')).toBeInTheDocument();
+    expect(screen.getAllByText(/draft_llm/).length).toBeGreaterThan(0);
+  });
+
+  it('shows empty-state hint for empty workflow', () => {
+    render(<CanvasMockup workflow="empty" />);
+    expect(screen.getByText(/Drag a node/i)).toBeInTheDocument();
   });
 });
