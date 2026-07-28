@@ -39,7 +39,9 @@ export function NavbarClient({ locale }: { locale: string }) {
             />
             <circle cx="12" cy="12" r="3" fill="currentColor" />
           </svg>
-          <span className="text-sm font-semibold tracking-tight">Hanflow</span>
+          {/* 移动端显示缩写 HF (导航紧凑), 桌面端显示全名 Hanflow */}
+          <span className="text-sm font-semibold tracking-tight sm:hidden">HF</span>
+          <span className="hidden text-sm font-semibold tracking-tight sm:inline">Hanflow</span>
         </Link>
 
         <div className="flex items-center gap-5">
