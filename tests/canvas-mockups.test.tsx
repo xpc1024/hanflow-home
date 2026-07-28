@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { CanvasNodeMockup } from '../components/docs/canvas/CanvasNodeMockup';
 import { NodePaletteMockup } from '../components/docs/canvas/NodePaletteMockup';
 import { CanvasMockup } from '../components/docs/canvas/CanvasMockup';
+import { StudioMockup } from '../components/docs/canvas/StudioMockup';
 
 describe('CanvasNodeMockup', () => {
   it('renders type label and summary lines', () => {
@@ -50,5 +51,16 @@ describe('CanvasMockup', () => {
   it('shows empty-state hint for empty workflow', () => {
     render(<CanvasMockup workflow="empty" />);
     expect(screen.getByText(/Drag a node/i)).toBeInTheDocument();
+  });
+});
+
+describe('StudioMockup', () => {
+  it('composes topbar + palette + canvas + inspector', () => {
+    const { container } = render(<StudioMockup />);
+    expect(container.querySelector('.not-prose')).not.toBeNull();
+    expect(screen.getByText('support-router')).toBeInTheDocument(); // TopBar workflow name
+    expect(screen.getByText('CONTROL')).toBeInTheDocument();        // Palette
+    expect(screen.getByText('router')).toBeInTheDocument();         // Canvas node
+    expect(screen.getByText('model')).toBeInTheDocument();          // Inspector field label
   });
 });
