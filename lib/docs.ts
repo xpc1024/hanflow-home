@@ -40,6 +40,7 @@ const GROUP_ORDER: Record<string, LocalizedGroup> = {
   'web-studio': {
     title: { en: 'Web Studio', zh: 'Web Studio' },
     files: [
+      { file: 'web-studio/canvas-overview', title: { en: 'Canvas Overview', zh: '画布总览' } },
       { file: 'web-studio/build-mode', title: { en: 'Build Mode', zh: 'Build 模式' } },
       { file: 'web-studio/monitor-mode', title: { en: 'Monitor Mode', zh: 'Monitor 模式' } },
       { file: 'web-studio/hitl-approvals', title: { en: 'HITL Approvals', zh: 'HITL 审批' } },
