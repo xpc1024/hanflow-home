@@ -26,7 +26,7 @@ export function DocsShell(props: DocsShellProps) {
       <div className="min-w-0 flex-1">
         <Breadcrumb items={crumbs} />
         <article className="mt-6 max-w-3xl">
-          <MDXRenderer source={source} />
+          <MDXRenderer source={source} locale={locale} />
           <DocsPager siblings={siblings} locale={locale} />
         </article>
       </div>
