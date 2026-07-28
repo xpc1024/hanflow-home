@@ -1,0 +1,82 @@
+# 贡献指南
+
+Hanflow 是一个用爱发电的独立开源项目,欢迎社区伙伴参与贡献。除了使用下一页的
+[contribute-pr 一键贡献](/docs/community/contribute-pr) AI 技能,你也可以用传统方式贡献。
+
+## 传统贡献流程
+
+### 1. Fork 并 clone
+
+在 GitHub 上 fork [xpc1024/hanflow](https://github.com/xpc1024/hanflow) 到你的账号,
+然后 clone 到本地:
+
+```bash
+git clone https://github.com/<你的用户名>/hanflow
+cd hanflow
+git remote add upstream https://github.com/xpc1024/hanflow.git
+```
+
+### 2. 创建 feature 分支
+
+从最新的 `main` 切分支,用 conventional commits 风格命名:
+
+```bash
+git fetch upstream main
+git checkout -b feat-your-feature upstream/main
+```
+
+### 3. 遵循 CHARTER 编码
+
+Hanflow 有一份架构守护规约 `CHARTER.md`(在 hanflow-evolve 仓库),定义了不可破坏的设计不变量:
+
+- 统一错误层级(所有框架错误继承 `HanflowError`)
+- 异步优先(`async def` 默认)
+- Pydantic v2 配置/数据模型
+- DSL → 编译 → 执行三段式
+
+编码前建议先读 `CHARTER.md §2 设计不变量`,确保改动不破坏架构契约。
+
+### 4. 测试
+
+```bash
+uv run pytest          # 单元测试
+uv run ruff check .    # lint
+uv run mypy hanflow    # 类型检查
+```
+
+确保你的改动不引入新的 lint / type / test 失败。
+
+### 5. 提交并推送
+
+用 conventional commits 格式(`feat:` / `fix:` / `docs:` / `refactor:` 等):
+
+```bash
+git add .
+git commit -m "feat: <你的改动摘要>"
+git push origin feat-your-feature
+```
+
+### 6. 开 Pull Request
+
+在 GitHub 上向 `xpc1024/hanflow` 的 `main` 分支开 PR,描述:
+- 这个 PR 解决什么问题 / 加什么功能
+- 关联的 issue(如有)
+- 测试情况
+
+## 想自动化?
+
+如果你觉得手工流程繁琐,可以用我们的 AI 辅助技能 **contribute-pr**——它会自动完成
+选题 → 设计 → TDD 实现 → 测试 → 提 PR 全流程,提交前还会跑架构守护检查。
+
+详见下一页:[一键贡献 (contribute-pr)](/docs/community/contribute-pr)
+
+## 行为准则
+
+- 对所有贡献者保持友善和尊重
+- 代码质量优先于速度
+- 有疑问多沟通(开 issue 讨论),不要闷头大改
+
+## 联系方式
+
+- GitHub Issues:[xpc1024/hanflow/issues](https://github.com/xpc1024/hanflow/issues)
+- PR review 通常在 3-7 天内回复(独立项目,请耐心)

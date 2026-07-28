@@ -55,6 +55,13 @@ const GROUP_ORDER: Record<string, LocalizedGroup> = {
       { file: 'api-reference/error-codes', title: { en: 'Error Codes', zh: '错误码' } },
     ],
   },
+  'community': {
+    title: { en: 'Community', zh: '社区贡献' },
+    files: [
+      { file: 'community/contributing', title: { en: 'Contributing Guide', zh: '贡献指南' } },
+      { file: 'community/contribute-pr', title: { en: 'Contribute via PR Skill', zh: '一键贡献 (contribute-pr)' } },
+    ],
+  },
 };
 
 const GROUP_KEYS = Object.keys(GROUP_ORDER);
