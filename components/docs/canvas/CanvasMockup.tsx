@@ -42,9 +42,10 @@ export function CanvasMockup({ workflow = 'rich' }: Props) {
   }
 
   const nodeById = new Map(SAMPLE_NODES.map((n) => [n.id, n]));
+  type Edge = { e: typeof SAMPLE_EDGES[number]; s: typeof SAMPLE_NODES[number]; t: typeof SAMPLE_NODES[number] };
   const edges = SAMPLE_EDGES
     .map((e) => ({ e, s: nodeById.get(e.source), t: nodeById.get(e.target) }))
-    .filter((x) => x.s && x.t) as { e: typeof SAMPLE_EDGES[number]; s: typeof SAMPLE_NODES[number]; t: typeof SAMPLE_NODES[number] };
+    .filter((x): x is Edge => Boolean(x.s && x.t));
 
   const root: CSSProperties = {
     position: 'relative', flex: 1, minHeight: 320, background: 'var(--bg-base)', overflow: 'hidden',
