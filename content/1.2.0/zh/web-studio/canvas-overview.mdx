@@ -1,0 +1,54 @@
+# 画布总览
+
+画布是 Hanflow 的可视化编排核心。你从左侧面板拖出节点，在中间画布上连线组成
+工作流（DAG），右侧面板配置每个节点。下面是一张完整的画布全景：
+
+<StudioMockup />
+
+## 画布的四个区域
+
+画布由四个固定区域组成：
+
+| 区域 | 职责 |
+| --- | --- |
+| TopBar（顶栏） | 工作流命名、保存、Dry-run、运行、主题切换 |
+| NodePalette（节点面板） | 列出 13 种节点，按分组着色，拖拽到画布 |
+| WorkflowCanvas（画布） | 节点与连线的编排区域，持久化位置 |
+| InspectorPanel（配置面板） | 选中节点后，按其 schema 生成类型化表单 |
+
+顶栏承载工作流的「全局动作」：命名、保存（带 dirty 守卫）、Dry-run（不调用真实模型即可观察执行形态）、运行：
+
+<TopBarMockup />
+
+## 节点：编排的原子
+
+13 种节点按五个分组着色，颜色即语义：控制节点灰、叶子节点按类型上色、动态/状态/检索各有专属色。
+节点面板按分组折叠展示：
+
+<NodePaletteMockup />
+
+每个节点是一个固定结构的卡片：顶部 4px 类型色条、类型名、配置摘要、左右两个连接端口（Handle）：
+
+<NodeAnatomy />
+
+## 连线与 DAG
+
+从一个节点的右侧 Handle 拖到另一个节点的左侧 Handle 即建立一条边。所有边构成一个有向无环图
+（DAG）——画布会阻止成环。下面是一个覆盖动态路由、分支、叶子、检索、审批的示例工作流：
+
+<CanvasMockup workflow="rich" />
+
+## 三种工作模式
+
+画布在不同模式下呈现不同状态：
+
+- **Build 模式**：编辑工作流，拖拽节点、连线、配置。详见 [Build 模式](/docs/web-studio/build-mode)。
+- **Monitor 模式**：画布只读，实时观察一次运行（WebSocket 流式更新节点状态）。详见
+  [Monitor 模式](/docs/web-studio/monitor-mode)。
+- **HITL 审批**：工作流暂停在人审节点，等待 approve / edit / reject。详见
+  [HITL 审批](/docs/web-studio/hitl-approvals)。
+
+## 节点语义
+
+画布只展示节点的「长相」。13 种节点的配置字段、JSON Schema 校验与 DSL 语义，见
+[13 个原子节点](/docs/core-concepts/nodes)。
