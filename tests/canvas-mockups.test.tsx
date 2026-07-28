@@ -4,6 +4,7 @@ import { CanvasNodeMockup } from '../components/docs/canvas/CanvasNodeMockup';
 import { NodePaletteMockup } from '../components/docs/canvas/NodePaletteMockup';
 import { CanvasMockup } from '../components/docs/canvas/CanvasMockup';
 import { StudioMockup } from '../components/docs/canvas/StudioMockup';
+import { NodeTableMockup } from '../components/docs/canvas/NodeTableMockup';
 
 describe('CanvasNodeMockup', () => {
   it('renders type label and summary lines', () => {
@@ -62,5 +63,20 @@ describe('StudioMockup', () => {
     expect(screen.getByText('CONTROL')).toBeInTheDocument();        // Palette
     expect(screen.getByText('router')).toBeInTheDocument();         // Canvas node
     expect(screen.getByText('model')).toBeInTheDocument();          // Inspector field label
+  });
+});
+
+describe('NodeTableMockup', () => {
+  it('control group lists 5 nodes with color bars', () => {
+    const { container } = render(<NodeTableMockup group="control" locale="en" />);
+    expect(screen.getByText('Sequential')).toBeInTheDocument();
+    expect(screen.getByText('HITL')).toBeInTheDocument();
+    expect(container.querySelectorAll('code').length).toBeGreaterThanOrEqual(5);
+  });
+
+  it('zh locale shows Chinese headers', () => {
+    render(<NodeTableMockup group="leaf" locale="zh" />);
+    expect(screen.getByText('节点')).toBeInTheDocument();
+    expect(screen.getByText('行为')).toBeInTheDocument();
   });
 });
