@@ -4,6 +4,7 @@ import { CanvasNodeMockup } from '../components/docs/canvas/CanvasNodeMockup';
 import { NodePaletteMockup } from '../components/docs/canvas/NodePaletteMockup';
 import { CanvasMockup } from '../components/docs/canvas/CanvasMockup';
 import { StudioMockup } from '../components/docs/canvas/StudioMockup';
+import { InspectorMockup } from '../components/docs/canvas/InspectorMockup';
 import { NodeTableMockup } from '../components/docs/canvas/NodeTableMockup';
 
 describe('CanvasNodeMockup', () => {
@@ -63,6 +64,18 @@ describe('StudioMockup', () => {
     expect(screen.getByText('CONTROL')).toBeInTheDocument();        // Palette
     expect(screen.getByText('router')).toBeInTheDocument();         // Canvas node
     expect(screen.getByText('model')).toBeInTheDocument();          // Inspector field label
+  });
+});
+
+describe('InspectorMockup', () => {
+  it('default (LLM) title is the draft_llm instance', () => {
+    render(<InspectorMockup />);
+    expect(screen.getByText('draft_llm')).toBeInTheDocument();
+  });
+
+  it('title follows the type prop', () => {
+    render(<InspectorMockup type="Tool" />);
+    expect(screen.getByText('lookup')).toBeInTheDocument();
   });
 });
 

@@ -11,6 +11,15 @@ function Field({ label, value }: { label: string; value: string }) {
 }
 
 // 选中节点的示例配置字段（静态展示类型化表单形态）。
+// TITLE 是该类型的一个示例实例 id（对齐产品 Inspector 显示节点 id 的形态），
+// 与 FIELDS 配套，确保切换 type 时标题与字段保持自洽。
+const TITLE: Record<NodeType, string> = {
+  Sequential: 'chain', Parallel: 'fan_out', Loop: 'retry_loop', Branch: 'router_branch',
+  HITL: 'approve', LLM: 'draft_llm', Tool: 'lookup', Research: 'search',
+  Execution: 'agent_run', Coordinator: 'router', Memory: 'memory',
+  Subworkflow: 'call_subflow', Knowledge: 'kb_lookup',
+};
+
 const FIELDS: Record<NodeType, { label: string; value: string }[]> = {
   LLM: [
     { label: 'model', value: 'gpt-4o' },
@@ -43,7 +52,7 @@ export function InspectorMockup({ type = 'LLM' }: Props) {
     <div style={root}>
       <div style={{ height: 4, background: color, borderRadius: 2, marginBottom: 12 }} />
       <div style={{ fontSize: 11, color, fontWeight: 600, marginBottom: 4 }}>{type}</div>
-      <div style={{ fontSize: 14, color: 'var(--text-primary)', fontWeight: 500, marginBottom: 16 }}>draft_llm</div>
+      <div style={{ fontSize: 14, color: 'var(--text-primary)', fontWeight: 500, marginBottom: 16 }}>{TITLE[type]}</div>
       {FIELDS[type].map((f) => <Field key={f.label} label={f.label} value={f.value} />)}
     </div>
   );
