@@ -29,6 +29,13 @@ const TYPE_BADGE: Record<string, string> = {
   refactor: 'bg-zinc-500/10 text-zinc-400',
 };
 
+// 状态点颜色 (spec §1.3): 🟢 open / ⚫ merged / 🔴 closed
+const STATUS_DOT: Record<string, string> = {
+  open: 'bg-emerald-500',
+  merged: 'bg-zinc-400',
+  closed: 'bg-red-500',
+};
+
 export default async function ContributorsPage({
   params,
 }: {
@@ -106,6 +113,7 @@ export default async function ContributorsPage({
                           height={24}
                         />
                         <span>@{c.github_user}</span>
+                        <span className={`inline-block h-1.5 w-1.5 rounded-full ${STATUS_DOT[c.pr_status] || STATUS_DOT.open}`} title={c.pr_status} />
                       </a>
                     </td>
                     <td className="whitespace-nowrap px-4 py-3 text-content-secondary">v{c.version}</td>
@@ -151,6 +159,7 @@ export default async function ContributorsPage({
                       height={24}
                     />
                     <span className="text-sm font-medium">@{c.github_user}</span>
+                    <span className={`inline-block h-1.5 w-1.5 rounded-full ${STATUS_DOT[c.pr_status] || STATUS_DOT.open}`} title={c.pr_status} />
                   </a>
                   <span className={`inline-block rounded px-2 py-0.5 text-xs font-medium ${TYPE_BADGE[c.type] || TYPE_BADGE.refactor}`}>
                     {t(`type_${c.type}` as never)}
