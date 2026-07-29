@@ -2,6 +2,10 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import rehypeShiki from '@shikijs/rehype';
 import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
+import {
+  StudioMockup, TopBarMockup, NodePaletteMockup, CanvasMockup,
+  CanvasNodeMockup, NodeAnatomy, InspectorMockup, NodeTableMockup,
+} from '@/components/docs/canvas';
 
 export function MDXRenderer({ source, locale }: { source: string; locale?: string }) {
   // Theme-aware prose: colors bind to the CSS variable tokens (design-taste
@@ -12,7 +16,16 @@ export function MDXRenderer({ source, locale }: { source: string; locale?: strin
   // 自定义 <a> 组件: 把 MDX 正文里的 /docs/... 链接自动加 locale 前缀,
   // 避免跨语言跳转 (如 zh 页面点链接跳到 en)。仅处理站内文档链接,
   // 外链 (http/https/mailto) 保持原样。
-  const components: Record<string, React.ComponentType<any>> = {};
+  const components: Record<string, React.ComponentType<any>> = {
+    StudioMockup,
+    TopBarMockup,
+    NodePaletteMockup,
+    CanvasMockup,
+    CanvasNodeMockup,
+    NodeAnatomy,
+    InspectorMockup,
+    NodeTableMockup,
+  };
   if (locale) {
     components.a = ({ href, children, ...rest }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
       const isInternalDocs =
