@@ -1,6 +1,19 @@
 {
   "contributions": [
     {
+      "id": "contrib-2026-W31-001",
+      "github_user": "iajie",
+      "github_user_url": "https://github.com/iajie",
+      "avatar_url": "https://github.com/iajie.png",
+      "date": "2026-07-29",
+      "version": "",
+      "type": "feat",
+      "summary": "implement stream() for anthropic/deepseek/ollama/vllm providers",
+      "pr_url": "https://github.com/xpc1024/hanflow/pull/5",
+      "pr_status": "open",
+      "merged_at": null
+    },
+    {
       "id": "contrib-example-001",
       "github_user": "xpc1024",
       "github_user_url": "https://github.com/xpc1024",
