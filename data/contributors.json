@@ -1,0 +1,17 @@
+{
+  "contributions": [
+    {
+      "id": "contrib-example-001",
+      "github_user": "xpc1024",
+      "github_user_url": "https://github.com/xpc1024",
+      "avatar_url": "https://github.com/xpc1024.png",
+      "date": "2026-07-29",
+      "version": "1.2.0",
+      "type": "feat",
+      "summary": "Initial contributors wall",
+      "pr_url": "https://github.com/xpc1024/hanflow-home/pull/1",
+      "pr_status": "merged",
+      "merged_at": "2026-07-29"
+    }
+  ]
+}

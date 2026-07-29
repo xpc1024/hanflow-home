@@ -14,6 +14,7 @@
     "source": "源码",
     "donate": "捐赠",
     "community": "社区",
+    "contributors": "贡献者名录",
     "github": "GitHub",
     "gitee": "Gitee",
     "license": "MIT/Apache-2.0",
@@ -123,6 +124,23 @@
     "alipay": "支付宝",
     "contact": "邮箱: xpc@dromara.com  |  微信: 252645816",
     "thanks": "感谢你与我们同行。"
+  },
+  "contributors": {
+    "title": "贡献者名录",
+    "subtitle": "感谢每一位为 Hanflow 付出的人",
+    "empty": "还没有贡献记录。成为第一个贡献者!",
+    "emptyCta": "了解如何贡献",
+    "col_date": "日期",
+    "col_contributor": "贡献者",
+    "col_version": "版本",
+    "col_type": "类型",
+    "col_summary": "简述",
+    "col_pr": "PR",
+    "type_feat": "新特性",
+    "type_fix": "修复",
+    "type_docs": "文档",
+    "type_refactor": "重构",
+    "type_other": "其它"
   },
   "docs": {
     "onThisPage": "本页内容",

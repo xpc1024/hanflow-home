@@ -59,6 +59,11 @@ export function Footer({ locale }: { locale: string }) {
                 {t('donate')}
               </Link>
             </li>
+            <li>
+              <Link href={`/${locale}/contributors`} className="text-sm text-content-secondary hover:text-content-primary">
+                {t('contributors')}
+              </Link>
+            </li>
           </ul>
         </div>
       </div>
