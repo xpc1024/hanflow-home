@@ -104,14 +104,6 @@ export default async function ContributorsPage({
                         rel="noreferrer"
                         className="flex items-center gap-2 text-content-primary hover:text-accent"
                       >
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={c.avatar_url}
-                          alt={c.github_user}
-                          className="h-6 w-6 rounded-full"
-                          width={24}
-                          height={24}
-                        />
                         <span>@{c.github_user}</span>
                         <span className={`inline-block h-1.5 w-1.5 rounded-full ${STATUS_DOT[c.pr_status] || STATUS_DOT.open}`} title={c.pr_status} />
                       </a>
@@ -150,14 +142,6 @@ export default async function ContributorsPage({
                     rel="noreferrer"
                     className="flex items-center gap-2 text-content-primary"
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={c.avatar_url}
-                      alt={c.github_user}
-                      className="h-6 w-6 rounded-full"
-                      width={24}
-                      height={24}
-                    />
                     <span className="text-sm font-medium">@{c.github_user}</span>
                     <span className={`inline-block h-1.5 w-1.5 rounded-full ${STATUS_DOT[c.pr_status] || STATUS_DOT.open}`} title={c.pr_status} />
                   </a>
