@@ -124,6 +124,23 @@
     "contact": "Email: xpc@dromara.com  |  WeChat: 252645816",
     "thanks": "Thank you for being part of the journey."
   },
+  "contributors": {
+    "title": "Contributors",
+    "subtitle": "Thanks to everyone who has contributed to Hanflow",
+    "empty": "No contributions yet. Be the first contributor!",
+    "emptyCta": "Learn how to contribute",
+    "col_date": "Date",
+    "col_contributor": "Contributor",
+    "col_version": "Version",
+    "col_type": "Type",
+    "col_summary": "Summary",
+    "col_pr": "PR",
+    "type_feat": "Feature",
+    "type_fix": "Fix",
+    "type_docs": "Docs",
+    "type_refactor": "Refactor",
+    "type_other": "Other"
+  },
   "docs": {
     "onThisPage": "On this page",
     "previous": "Previous",
