@@ -22,11 +22,12 @@ export default async function DocPage({
   const activeSlug = rest.join('/');
   const siblings = findDocSiblings(tree, activeSlug);
 
+  const crumbPrefix = version === LATEST_MAJOR ? '' : `${version}/`;
   const crumbs: Crumb[] = [
-    { label: 'Docs', href: `/${locale}/docs/quick-start` },
+    { label: 'Docs', href: `/${locale}/docs/${crumbPrefix}quick-start` },
     ...rest.map((seg, i) => ({
       label: seg.replace(/-/g, ' ').replace(/^\w/, (c) => c.toUpperCase()),
-      href: i === rest.length - 1 ? undefined : `/${locale}/docs/${rest.slice(0, i + 1).join('/')}`,
+      href: i === rest.length - 1 ? undefined : `/${locale}/docs/${crumbPrefix}${rest.slice(0, i + 1).join('/')}`,
     })),
   ];
 
@@ -37,6 +38,7 @@ export default async function DocPage({
       siblings={siblings}
       activeSlug={activeSlug}
       locale={locale}
+      version={version}
       crumbs={crumbs}
       source={doc.raw}
     />

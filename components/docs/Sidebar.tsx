@@ -4,20 +4,25 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { ChevronDown } from 'lucide-react';
 import type { SidebarNode } from '@/lib/docs';
+import { LATEST_MAJOR } from '@/lib/versions';
 
 export function Sidebar({
   tree,
   locale,
   activeSlug,
+  version,
 }: {
   tree: SidebarNode[];
   locale: string;
   activeSlug: string;
+  version: string; // 大版本线, 如 '1.x'; LATEST_MAJOR 时无前缀
 }) {
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
 
   function hrefFor(slug: string) {
-    return `/${locale}/docs/${slug}`;
+    // LATEST 线不加前缀; 旧线加 <major>.x/ 前缀
+    const prefix = version === LATEST_MAJOR ? '' : `${version}/`;
+    return `/${locale}/docs/${prefix}${slug}`;
   }
 
   return (
