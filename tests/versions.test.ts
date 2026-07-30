@@ -58,14 +58,17 @@ describe('versions (major-line model)', () => {
 
   it('maps a legacy semver first segment onto its major line', () => {
     // 1.2.1 → 1.x (兼容旧 SEO 链接)
+    // 注: 把 LATEST_MAJOR 当 string 比较, 避免在单 major 线时被字面量类型窄化
+    // (当只有 1.x 时, MajorVersion = '1.x', '2.x' === LATEST_MAJOR 会被 TS 判为无重叠)
+    const latest: string = LATEST_MAJOR;
     expect(resolveVersion(['1.2.1', 'quick-start'])).toEqual({
       version: '1.x',
-      isLatest: '1.x' === LATEST_MAJOR,
+      isLatest: '1.x' === latest,
       rest: ['quick-start'],
     });
     expect(resolveVersion(['2.0.0', 'quick-start'])).toEqual({
       version: '2.x',
-      isLatest: '2.x' === LATEST_MAJOR,
+      isLatest: '2.x' === latest,
       rest: ['quick-start'],
     });
   });
