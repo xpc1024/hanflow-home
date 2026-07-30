@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { notFound } from 'next/navigation';
 import { buildSidebarTree, readDoc, findDocSiblings } from '@/lib/docs';
-import { resolveVersion, LATEST_VERSION } from '@/lib/versions';
+import { resolveVersion, LATEST_MAJOR, MAJOR_VERSIONS } from '@/lib/versions';
 import { DocsShell } from '@/components/docs/DocsShell';
 import type { Crumb } from '@/components/docs/Breadcrumb';
 
@@ -44,21 +44,28 @@ export default async function DocPage({
 }
 
 export async function generateStaticParams() {
-  // Pre-render latest-version docs for both locales; old versions add their own.
+  // 预渲染所有大版本线 × {en,zh} × 全部 slug, 让 1.x / 将来 2.x 都可真切换。
   const fs = await import('node:fs/promises');
   const out: { locale: string; slug: string[] }[] = [];
   for (const locale of ['en', 'zh']) {
-    const dir = path.join(CONTENT_ROOT, LATEST_VERSION, locale);
-    let exists = true;
-    try {
-      await fs.access(dir);
-    } catch {
-      exists = false;
-    }
-    if (!exists) continue;
-    const files = await walkMdx(dir);
-    for (const rel of files) {
-      out.push({ locale, slug: rel });
+    for (const ver of MAJOR_VERSIONS) {
+      const dir = path.join(CONTENT_ROOT, ver, locale);
+      let exists = true;
+      try {
+        await fs.access(dir);
+      } catch {
+        exists = false;
+      }
+      if (!exists) continue;
+      const files = await walkMdx(dir);
+      for (const rel of files) {
+        // LATEST 线不加前缀; 旧线加 <major>.x/ 前缀
+        if (ver === LATEST_MAJOR) {
+          out.push({ locale, slug: rel });
+        } else {
+          out.push({ locale, slug: [ver, ...rel] });
+        }
+      }
     }
   }
   return out;
