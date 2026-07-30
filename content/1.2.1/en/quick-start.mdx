@@ -1,0 +1,61 @@
+# Quick Start
+
+Get Hanflow running locally in under five minutes using Docker.
+
+## Prerequisites
+
+- Docker 24+ and Docker Compose v2
+- A model API key (OpenAI, GLM, DeepSeek, Anthropic, or a local Ollama/vLLM server)
+
+## 1. Clone
+
+```bash
+git clone https://github.com/hanflow/hanflow
+cd hanflow
+```
+
+## 2. Configure
+
+Copy the example config and environment files, then put your model keys in `.env`.
+
+```bash
+cp deploy/docker/hanflow.yaml.example hanflow.yaml
+cp deploy/docker/.env.example .env
+```
+
+The example config defines a `strong` model and a `fast` model, with the strong
+model as the routing default and the fast model as fallback.
+
+```yaml
+models:
+  strong: { provider: openai, model: gpt-4o, api_key: "${OPENAI_KEY}" }
+  fast:   { provider: glm, model: glm-4-flash, api_key: "${GLM_KEY}" }
+routing:
+  default: strong
+  fallback_chain: [strong, fast]
+```
+
+## 3. Run
+
+Start the full stack (engine, web studio, postgres, redis) with one command.
+
+```bash
+cd deploy/docker
+docker compose up -d
+```
+
+Open the services:
+
+- Web Studio: http://localhost:3000
+- API and interactive docs: http://localhost:8000/docs
+
+## Verify
+
+Create a workflow in Web Studio, or run one from the CLI:
+
+```bash
+hanflow validate workflows/untitled.yaml
+hanflow run workflows/untitled.yaml
+```
+
+Use `hanflow doctor` to check your environment and config health.

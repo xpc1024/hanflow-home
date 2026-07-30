@@ -1,0 +1,42 @@
+# 模型路由
+
+路由器为每次 LLM 调用挑选模型。策略按优先级 `privacy > role > task > cost > static`
+运行，得分最高的候选胜出。
+
+## 六种策略
+
+| 策略 | 得分 | 行为 |
+| --- | --- | --- |
+| `privacy` | inf | 敏感度高或存在 PII 时硬否决到本地 provider |
+| `role` | 50 | 按角色（planner / researcher / coder）映射模型 |
+| `task` | 40 | 按任务类型（reasoning / coding / vision）映射模型 |
+| `cost` | 30 | 按预算档位挑选 |
+| `static` | 100 | 遵守显式 `prefer` |
+| `fallback` | - | 失败时的韧性链，非路由策略 |
+
+## 隐私路由
+
+敏感度分级：`public`、`internal`、`confidential`、`restricted`。当敏感度为
+`confidential` 及以上，或检测到 PII（email、phone、id card、card），只有
+`is_local` 的 provider 可用。
+
+- `enforce: hard`：无本地 provider 时抛 `PRIVACY_VIOLATION`
+- `enforce: soft`：回退到下一策略
+
+PII 在调用前以 `<<kind:hex>>` 占位符脱敏，调用后按 `RedactionMap` 还原。
+
+## 兜底
+
+兜底不是路由策略。仅当主 provider 失败后才激活，按 `routing.fallback_chain`
+顺序尝试。
+
+## 流式输出
+
+除了一次性返回（`generate`），每个 provider 都实现了 `stream()` 异步生成器，
+逐块产出 `StreamChunk`（增量文本 / token 用量 / 结束原因）。连接阶段失败抛出的
+`ModelTimeoutError` 标记为可重试（`retryable=True`）；流传输中途失败则把当前实例
+置为 `retryable=False`，避免对已部分发送的请求盲目重放。
+
+自 v1.2.1 起，openai / deepseek / vllm（OpenAI 兼容）、anthropic、ollama 四类
+provider 的 `stream()` 均已落地，可在构建模式与 Monitor 模式中启用流式响应。
+（贡献：@iajie，[PR #5](https://github.com/xpc1024/hanflow/pull/5)）

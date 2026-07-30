@@ -6,7 +6,7 @@
       "github_user_url": "https://github.com/iajie",
       "avatar_url": "https://github.com/iajie.png",
       "date": "2026-07-29",
-      "version": "",
+      "version": "1.2.1",
       "type": "feat",
       "summary": "implement stream() for anthropic/deepseek/ollama/vllm providers",
       "pr_url": "https://github.com/xpc1024/hanflow/pull/5",

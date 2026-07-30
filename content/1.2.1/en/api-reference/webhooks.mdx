@@ -1,0 +1,25 @@
+# Webhook Triggers
+
+Trigger a workflow from an external system with an HTTP webhook.
+
+## Configure
+
+Add a trigger token under workflow metadata:
+
+```yaml
+metadata:
+  triggers:
+    - token: "secret-token"
+      enabled: true
+      label: "CI hook"
+```
+
+## Trigger
+
+```bash
+curl -X POST http://localhost:8000/api/webhooks/{workflow_id}/{token}
+```
+
+- The endpoint uses a semaphore of 10 concurrent triggers.
+- When full, it responds `429 Too Many Requests`.
+- `enabled: false` disables a trigger without deleting it.

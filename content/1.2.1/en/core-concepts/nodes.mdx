@@ -1,0 +1,38 @@
+# 13 Primitive Nodes
+
+Workflows are composed from 13 node types. Each node declares a `type`, an `id`,
+a `depends_on` edge list, and a `config` block validated against a JSON Schema.
+For how these nodes appear on the canvas, see
+[Canvas Overview](/docs/web-studio/canvas-overview).
+
+## Control nodes
+
+<NodeTableMockup group="control" locale="en" />
+
+## Leaf nodes
+
+<NodeTableMockup group="leaf" locale="en" />
+
+## Dynamic and state nodes
+
+<NodeTableMockup group="dynamic" locale="en" />
+
+## Example
+
+```yaml
+nodes:
+  - id: plan
+    type: LLM
+    config: { role: planner, template: "Draft a plan for {{input.goal}}" }
+  - id: search
+    type: Research
+    depends_on: [plan]
+    config: { query: "{{plan.output}}", depth: standard }
+  - id: approve
+    type: HITL
+    depends_on: [search]
+    config: { actions: [approve, reject], timeout_seconds: 3600 }
+```
+
+Every node also accepts `condition`, `on_error`, `retry`, `timeout_seconds`,
+`sensitivity`, and `disabled`.

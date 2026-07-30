@@ -1,0 +1,60 @@
+# 快速开始
+
+用 Docker 在五分钟内把 Hanflow 跑起来。
+
+## 前置条件
+
+- Docker 24+ 与 Docker Compose v2
+- 任一模型 API Key（OpenAI、GLM、DeepSeek、Anthropic，或本地 Ollama/vLLM 服务）
+
+## 1. 克隆
+
+```bash
+git clone https://github.com/hanflow/hanflow
+cd hanflow
+```
+
+## 2. 配置
+
+复制示例配置与环境文件，然后在 `.env` 填写模型密钥。
+
+```bash
+cp deploy/docker/hanflow.yaml.example hanflow.yaml
+cp deploy/docker/.env.example .env
+```
+
+示例配置定义了 `strong` 与 `fast` 两个模型，strong 为路由默认，fast 为兜底。
+
+```yaml
+models:
+  strong: { provider: openai, model: gpt-4o, api_key: "${OPENAI_KEY}" }
+  fast:   { provider: glm, model: glm-4-flash, api_key: "${GLM_KEY}" }
+routing:
+  default: strong
+  fallback_chain: [strong, fast]
+```
+
+## 3. 运行
+
+一条命令拉起全栈（engine、Web Studio、postgres、redis）。
+
+```bash
+cd deploy/docker
+docker compose up -d
+```
+
+访问服务：
+
+- Web Studio：http://localhost:3000
+- API 与交互式文档：http://localhost:8000/docs
+
+## 验证
+
+在 Web Studio 创建工作流，或用 CLI 运行：
+
+```bash
+hanflow validate workflows/untitled.yaml
+hanflow run workflows/untitled.yaml
+```
+
+用 `hanflow doctor` 检查环境与配置健康度。

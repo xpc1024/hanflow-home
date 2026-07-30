@@ -1,0 +1,164 @@
+# Contribute via PR Skill (contribute-pr)
+
+Hanflow provides an AI-assisted contribution skill, **contribute-pr**, that lets you complete
+the full "pick topic → design → implement → submit PR" workflow without needing to know the
+entire codebase — while still respecting Hanflow's architectural charter.
+
+It reuses the Hanflow self-evolution pipeline (loop-evolve) for the scan→code→verify phases,
+produces code that conforms to the CHARTER design invariants, and submits via Pull Request —
+you do **not** need write access to `xpc1024/hanflow`.
+
+## Who it's for
+
+- New contributors who want to help but don't know where to start
+- Folks with ideas but limited time to dig into code details
+- Anyone fixing issues or completing feature modules
+- Documentation-only contributors (typos, examples) — use `/contribute-pr docs`
+
+## Prerequisites
+
+1. Install ZCode / Claude Code / Codex (any one)
+2. One-line install of the contribute-pr skill (includes loop-evolve dependency + GitHub CLI).
+
+   **⚠️ Terminal requirement**: Run the commands below in **Git Bash** (Windows) / Terminal (Mac) / bash (Linux).
+   Do NOT run in WSL, CMD, or PowerShell (WSL proxy issues and may lack bash; CMD/PowerShell have no `bash` command).
+
+   ```bash
+   curl -fsSL https://raw.githubusercontent.com/xpc1024/hanflow-evolve/main/install.sh | bash
+   ```
+
+   Or install manually (if you want to inspect the script first):
+
+   ```bash
+   git clone https://github.com/xpc1024/hanflow-evolve
+   cd hanflow-evolve && bash install.sh
+   ```
+
+   The installer automatically:
+   - Clones hanflow-evolve (skill source) + hanflow (your fork) + hanflow-home
+   - Installs contribute-pr + loop-evolve skills to `~/.zcode/skills/`
+   - Auto-forks hanflow to your GitHub account (when gh is logged in) or asks for your username
+   - Configures the upstream remote (needed to PR against xpc1024/hanflow)
+   - **Installs and signs in to GitHub CLI for you** (see "Credential safety" below)
+
+3. The installer guides you through `gh auth login` (browser authorization). Once done, you can
+   trigger the skill.
+
+## ⚠️ Credential safety (please read first)
+
+The installer and contribute-pr need GitHub credentials to submit PRs. **The default path is
+`gh auth login --web`**: you only click Authorize in the browser. The credential is stored
+securely by gh in your system credential store (Windows Credential Manager / macOS Keychain) —
+**Hanflow never touches your credential**.
+
+- Your GitHub password is **never** required
+- The credential is managed by the official gh tool; revoke anytime with `gh auth logout`
+- On headless servers or if you prefer not to use gh auth, fall back to a fine-grained PAT path
+  (zero persistence) — see the skill's `references/credential-handling.md`
+
+## Triggering the skill in each tool
+
+| Tool | How to trigger |
+|------|----------------|
+| ZCode / Claude Code | Type `/contribute-pr` |
+| Codex | Paste the "AGENTS.md snippet" (below) into the project's `AGENTS.md`, then say `contribute-pr` in chat |
+
+## Full workflow
+
+```
+1.  scan              gather signals (issues / stubs / learnings)
+2.  prioritize        score & sort candidate themes
+3.  check_occupied    dedupe (query GitHub PRs + local archive, avoid topic clashes)
+4.  human_topic       (optional) you specify the topic directly, skipping 1-3
+5.  plan              generate direction plan
+6.  audit_direction   AUDIT the direction
+7.  gate1             wait for your confirmation of direction
+8.  design            outline + architecture design
+9.  audit_design      AUDIT the design
+10. gate2             wait for your confirmation of design
+11. plan_exec         generate execution plan
+12. code              TDD implementation (on evolve/<contribution_id> branch)
+13. verify            tests + smoke + auto-fix
+14. gate3             wait for your final confirmation
+15. submit            S0 quality gate + fork push + open PR (code + optional docs)
+```
+
+## Quality assurance (why maintainers can focus on requirements value)
+
+Before submitting, the **S0 quality gate** runs (local readiness checks):
+- charter-check architectural invariants review (CHARTER design rules)
+- ruff lint zero warnings
+- conventional commits compliance
+
+The submitted PR description includes **real data** (test counts, invariant checks, lint status)
+so maintainers can see at a glance that quality has been verified.
+
+**Honest note**: local S0 green ≠ GitHub CI green (environment differences). Maintainers can
+usually focus on requirements value, but may still encounter CI environment issues that need
+your attention — this is residual work the skill cannot fully eliminate.
+
+## Deduplication
+
+The `check_occupied` step in topic selection queries upstream GitHub PRs
+(xpc1024/hanflow + hanflow-home) and your local CONTRIBUTIONS.md to avoid topic clashes:
+- Active PR (open) → hard skip, not selectable
+- Merged PR → "this feature was merged on X by @y, you can do an enhanced version"
+- Closed PR → "this was submitted but not merged, check the reason before deciding"
+
+## Command reference
+
+| Command | Behavior |
+|---------|----------|
+| `/contribute-pr` | Resume current phase, or start a new contribution |
+| `/contribute-pr topic <desc>` | You specify the topic, skip selection |
+| `/contribute-pr docs <desc>` | Docs-only contribution, jump to hanflow-home |
+| `/contribute-pr status` | Print current state + local contribution archive |
+| `/contribute-pr refresh` | Refresh local archive status (gh pr view) |
+| `/contribute-pr gate approve\|revise\|reject` | Confirm at a Gate phase |
+| `/contribute-pr abort` | Abort current contribution, clean up credentials |
+
+## FAQ
+
+**Q: Will Hanflow collect my GitHub credentials?**
+A: No. The default path uses gh auth, credentials are stored by the official gh tool, Hanflow
+never touches them. See "Credential safety".
+
+**Q: I only want to change docs (typos, examples)?**
+A: Use `/contribute-pr docs <desc>` — skips code phases and submits directly on hanflow-home.
+
+**Q: What if my PR clashes with someone else's topic?**
+A: `check_occupied` warns you in advance. If both are already submitted, GitHub's PR-create-fail
+acts as a safety net (the skill is idempotent — if a branch already has a PR, it reuses the
+existing URL instead of creating a duplicate).
+
+**Q: Can my contribution history sync across machines?**
+A: The local CONTRIBUTIONS.md is a single-machine archive, not synced across machines. But
+cross-contributor deduplication relies on GitHub PR queries (global source of truth), not on
+your local archive.
+
+## AGENTS.md snippet (for Codex users)
+
+Codex has no native skill mechanism. Paste this snippet into the project root's `AGENTS.md`
+to trigger the skill in chat:
+
+```markdown
+<!-- AGENTS.md snippet (paste for Codex) -->
+## Hanflow community contribution skill (contribute-pr)
+
+When the user says "contribute to hanflow PR" / "community contribution" / "contribute-pr",
+follow this workflow:
+
+1. Read ~/.zcode/skills/contribute-pr/SKILL.md (if missing, tell the user to run
+   curl -fsSL https://raw.githubusercontent.com/xpc1024/hanflow-evolve/main/install.sh | bash)
+2. Follow the phase routing in SKILL.md, with tool mapping:
+   - "invoke Agent/subagent" → use the Task tool
+   - "Edit/Write files"    → use apply_patch
+   - other Bash/Read calls → same as Codex native
+3. The credential safety notice must be printed first (see credential-handling.md)
+```
+
+## Want to go deeper?
+
+- Skill source: `skills/contribute-pr/` in the `xpc1024/hanflow-evolve` repo
+- Traditional contribution (without the AI skill): see previous page
+  [Contributing Guide](/en/docs/community/contributing)
