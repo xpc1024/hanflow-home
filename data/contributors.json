@@ -1,6 +1,32 @@
 {
   "contributions": [
     {
+      "id": "contrib-2026-W31-002",
+      "github_user": "iajie",
+      "github_user_url": "https://github.com/iajie",
+      "avatar_url": "https://github.com/iajie.png",
+      "date": "2026-07-31",
+      "version": "1.2.2",
+      "type": "build",
+      "summary": "add pytest-cov coverage baseline",
+      "pr_url": "https://github.com/xpc1024/hanflow/pull/6",
+      "pr_status": "merged",
+      "merged_at": "2026-07-31"
+    },
+    {
+      "id": "contrib-2026-W31-003",
+      "github_user": "iajie",
+      "github_user_url": "https://github.com/iajie",
+      "avatar_url": "https://github.com/iajie.png",
+      "date": "2026-07-31",
+      "version": "1.2.2",
+      "type": "chore",
+      "summary": "refresh uv.lock for pytest-cov (follow-up to #6)",
+      "pr_url": "https://github.com/xpc1024/hanflow/pull/7",
+      "pr_status": "merged",
+      "merged_at": "2026-07-31"
+    },
+    {
       "id": "contrib-2026-W31-001",
       "github_user": "iajie",
       "github_user_url": "https://github.com/iajie",
