@@ -5,7 +5,7 @@ export const MAJOR_VERSIONS = ['1.x'] as const;
 export type MajorVersion = (typeof MAJOR_VERSIONS)[number];
 
 export const LATEST_MAJOR: MajorVersion = '1.x';
-export const LATEST_SEMVER: string = '1.2.1';
+export const LATEST_SEMVER: string = '1.2.3';
 
 
 export interface ResolvedVersion {
