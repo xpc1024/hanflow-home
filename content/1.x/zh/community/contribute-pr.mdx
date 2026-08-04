@@ -111,6 +111,27 @@ CONTRIBUTIONS.md,避免你与他人或历史贡献撞主题:
 | `/contribute-pr gate approve\|revise\|reject` | Gate 阶段确认 |
 | `/contribute-pr abort` | 终止当前贡献,清理凭证 |
 
+## 语言变体(中文 / English)
+
+本 skill **默认输出中文**(由用户级 `~/.zcode/AGENTS.md` 设定)。如果你需要英文输出——
+例如与国际贡献者协作、或在英文 PR 讨论里贴阶段进展——使用 `-en` 变体:
+
+| 命令 | 行为 |
+|------|------|
+| `/contribute-pr-en` | 同 `/contribute-pr`,但所有输出为英文 |
+| `/contribute-pr-en topic <描述>` | 指定主题,英文输出 |
+| `/contribute-pr-en docs <描述>` | 纯文档贡献,英文输出 |
+| `/contribute-pr-en status` | 打印状态 + 本机档案,英文 |
+| `/contribute-pr-en gate approve\|revise\|reject` | Gate 确认,英文 |
+| `/contribute-pr-en abort` | 终止 + 清理凭证,英文 |
+
+`-en` 变体**不复制** skill——它委托 `contribute-pr`,仅覆盖输出语言。状态
+(`.contribute/state.yaml`)与产物共享,因此 `/contribute-pr` 与 `/contribute-pr-en`
+可在贡献过程中自由切换。
+
+同样的 `-en` 模式适用于其他 hanflow-evolve skill:
+`/loop-evolve-en` 与 `/loop-evolve-max-en`(后者还会把专家 subagent 输出切为英文)。
+
 ## FAQ
 
 **Q: 我的 GitHub 凭证会被 Hanflow 收集吗?**

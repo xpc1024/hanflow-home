@@ -117,6 +117,29 @@ The `check_occupied` step in topic selection queries upstream GitHub PRs
 | `/contribute-pr gate approve\|revise\|reject` | Confirm at a Gate phase |
 | `/contribute-pr abort` | Abort current contribution, clean up credentials |
 
+## Language variants (中文 / English)
+
+The skill defaults to **Chinese** output (set via the user-level `~/.zcode/AGENTS.md`).
+If you prefer English — for example when pairing with international contributors, or when
+sharing phase output in an English-language PR thread — use the `-en` variant:
+
+| Command | Behavior |
+|---------|----------|
+| `/contribute-pr-en` | Same as `/contribute-pr`, but all output in English |
+| `/contribute-pr-en topic <desc>` | Specify topic, English output |
+| `/contribute-pr-en docs <desc>` | Docs-only contribution, English output |
+| `/contribute-pr-en status` | Print state + local archive, English |
+| `/contribute-pr-en gate approve\|revise\|reject` | Gate confirm, English |
+| `/contribute-pr-en abort` | Abort + clean credentials, English |
+
+The `-en` variant does **not** duplicate the skill — it delegates to `contribute-pr` and
+overrides only the output language. State (`.contribute/state.yaml`) and artifacts are shared,
+so you can switch between `/contribute-pr` and `/contribute-pr-en` mid-contribution freely.
+
+The same `-en` pattern applies to the other hanflow-evolve skills:
+`/loop-evolve-en` and `/loop-evolve-max-en` (the latter also routes expert-subagent output
+to English).
+
 ## FAQ
 
 **Q: Will Hanflow collect my GitHub credentials?**
