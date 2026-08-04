@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { buildSidebarTree, readDoc, findDocSiblings } from '@/lib/docs';
 import { resolveVersion, LATEST_MAJOR, MAJOR_VERSIONS } from '@/lib/versions';
 import { DocsShell } from '@/components/docs/DocsShell';
@@ -14,6 +14,13 @@ export default async function DocPage({
 }) {
   const { locale, slug = [] } = await params;
   const { version, rest } = resolveVersion(slug);
+
+  // 空 slug (直链 /zh/docs、收藏夹、或版本选择器从非文档页跳来) 不对应任何
+  // 真实文档; 主动重定向到该版本的落地文档 quick-start, 而不是 notFound。
+  if (rest.length === 0) {
+    const prefix = version === LATEST_MAJOR ? '' : `${version}/`;
+    redirect(`/${locale}/docs/${prefix}quick-start`);
+  }
 
   const doc = await readDoc(CONTENT_ROOT, version, locale, rest);
   if (!doc) notFound();

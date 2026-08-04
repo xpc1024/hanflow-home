@@ -42,7 +42,9 @@ export function VersionSelector() {
 
   function selectLine(target: string) {
     // 保留 locale; LATEST 线不加前缀, 其余加 <major>.x/
-    const slugPart = rest.join('/');
+    // 从非 docs 页面点开版本选择器时 rest 为空, 此时不能拼成空 slug
+    // (/zh/docs → notFound), 一律落到该版本的落地文档 quick-start。
+    const slugPart = rest.length > 0 ? rest.join('/') : 'quick-start';
     const prefix = target === LATEST_MAJOR ? '' : `${target}/`;
     const href = `/${locale}/docs/${prefix}${slugPart}`;
     window.localStorage.setItem('hanflow-docs-version', target);
