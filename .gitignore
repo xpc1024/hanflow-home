@@ -27,3 +27,6 @@ yarn-error.log*
 # test fixtures generated at runtime
 /tests/__fixtures__/
 .contribute/
+
+# IDE
+.idea/
