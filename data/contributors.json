@@ -1,6 +1,19 @@
 {
   "contributions": [
     {
+      "id": "contrib-2026-W32-001",
+      "github_user": "lystrosaurus",
+      "github_user_url": "https://github.com/lystrosaurus",
+      "avatar_url": "https://github.com/lystrosaurus.png",
+      "date": "2026-08-08",
+      "version": "1.2.4",
+      "type": "test",
+      "summary": "write workflow test artifacts to tmp_path instead of repo workflows/",
+      "pr_url": "https://github.com/xpc1024/hanflow/pull/9",
+      "pr_status": "open",
+      "merged_at": null
+    },
+    {
       "id": "contrib-2026-W31-002",
       "github_user": "iajie",
       "github_user_url": "https://github.com/iajie",
