@@ -5,13 +5,20 @@
 
 ## 传输
 
+远程传输经官方 `mcp` SDK 说 MCP 协议（v1.3.0 起，ADR-0008）。总线在 `start()`
+时连接非 lazy 服务；单个服务失败会被隔离（告警但不阻断总线），`lazy: true`
+的服务在首次使用时连接。
+
 | 传输 | 用途 |
 | --- | --- |
-| `stdio` | 本地子进程 |
-| `sse` | Server-Sent Events |
-| `http` | HTTP 请求/响应 |
-| `websocket` | 双向 |
+| `stdio` | 本地 MCP server 子进程（生产可用） |
+| `http` | MCP **Streamable HTTP** —— 生产远程主路径 |
+| `sse` | 旧式 HTTP+SSE 桥接（MCP 规范已弃用，连接时告警） |
+| `websocket` | **占位** —— MCP 协议未定义 websocket 传输，`connect()` 抛 `NotImplementedError` |
 | `inprocess` | 内置服务，无网络 |
+
+远程失败包装为稳定错误码：服务配置无效抛 `MCP_CONFIG_INVALID`，连接/握手/IO
+失败抛 `MCP_CONN_FAILED`（可重试），远端工具自身报错抛 `TOOL_EXEC_FAILED`。
 
 ## 内置服务
 

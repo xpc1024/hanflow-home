@@ -6,13 +6,23 @@ and calls. Retries happen on failure unless the tool is annotated `destructive`.
 
 ## Transports
 
+Remote transports speak the Model Context Protocol through the official
+`mcp` SDK (v1.3.0, ADR-0008). The bus connects non-lazy servers on `start()`;
+a failing server is isolated (warning, never blocks the bus), and `lazy: true`
+servers connect on first use.
+
 | Transport | Use |
 | --- | --- |
-| `stdio` | Local subprocess |
-| `sse` | Server-sent events |
-| `http` | HTTP request/response |
-| `websocket` | Bidirectional |
+| `stdio` | Local MCP server subprocess (production-ready) |
+| `http` | MCP **Streamable HTTP** — the production remote path |
+| `sse` | Legacy HTTP+SSE bridge (deprecated by the MCP spec; warns on connect) |
+| `websocket` | **Placeholder** — the MCP protocol defines no websocket transport; `connect()` raises `NotImplementedError` |
 | `inprocess` | Built-in server, no network |
+
+Remote failures are wrapped in stable error codes: invalid server config
+raises `MCP_CONFIG_INVALID`, connect/handshake/IO failures raise
+`MCP_CONN_FAILED` (retryable), and a remote tool reporting a tool-level error
+raises `TOOL_EXEC_FAILED`.
 
 ## Built-in servers
 

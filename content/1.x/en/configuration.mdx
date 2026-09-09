@@ -12,7 +12,7 @@ the environment.
 | `workspace_root` | Base directory for runtime workspaces |
 | `models` | Named model references used by routing |
 | `routing` | Default model, roles, tasks, fallback, budget, privacy |
-| `mcp_servers` | MCP tool servers (stdio / sse / http / websocket / inprocess) |
+| `mcp_servers` | MCP tool servers (stdio / sse / http / inprocess; `websocket` is an unimplemented placeholder — the MCP protocol defines no such transport) |
 | `search` `embeddings` `rerankers` | RAG retrieval providers |
 | `memory` `skills` | Long-term memory and skill registries |
 | `persistence` | Checkpoint, session, and artifact stores |

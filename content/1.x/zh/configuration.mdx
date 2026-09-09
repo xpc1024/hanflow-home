@@ -10,7 +10,7 @@ Hanflow 通过 `hanflow.yaml` 配置。解析优先级：`HANFLOW_*` 环境变�
 | `workspace_root` | 运行时 workspace 根目录 |
 | `models` | 路由使用的命名模型引用 |
 | `routing` | 默认模型、角色、任务、兜底、预算、隐私 |
-| `mcp_servers` | MCP 工具服务（stdio / sse / http / websocket / inprocess） |
+| `mcp_servers` | MCP 工具服务（stdio / sse / http / inprocess；`websocket` 为未实现的占位——MCP 协议未定义该传输） |
 | `search` `embeddings` `rerankers` | RAG 检索 provider |
 | `memory` `skills` | 长期记忆与技能注册表 |
 | `persistence` | checkpoint、session、artifact 三类存储 |
