@@ -148,6 +148,9 @@
     "next": "Next",
     "notFound": "This page could not be found."
   },
+  "loading": {
+    "status": "Loading"
+  },
   "about": {
     "title": "What is Hanflow?",
     "tagline": "A fusion AI orchestration framework that combines the best of workflow engines and autonomous agents — like a hybrid car that runs on pure electric, pure gas, or both.",

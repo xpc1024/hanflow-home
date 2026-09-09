@@ -148,6 +148,9 @@
     "next": "下一页",
     "notFound": "找不到该页面。"
   },
+  "loading": {
+    "status": "正在加载"
+  },
   "about": {
     "title": "什么是 Hanflow？",
     "tagline": "一款融合型 AI 编排框架，兼具工作流引擎的稳定与自主 Agent 的灵活——如同混动车，可纯电、纯油、或混合运行。",

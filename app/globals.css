@@ -14,6 +14,7 @@
   --text-muted: #71717a;     /* zinc-500 */
   --accent: #06b6d4;         /* cyan-500 */
   --accent-glow: rgba(6, 182, 212, 0.15);
+  --skeleton-highlight: rgba(250, 250, 250, 0.06); /* zinc-50 at 6%, tuned to dark bg */
   color-scheme: dark;
 }
 
@@ -29,6 +30,7 @@
     --text-muted: #71717a;     /* zinc-500 */
     --accent: #0891b2;         /* cyan-600 */
     --accent-glow: rgba(8, 145, 178, 0.12);
+    --skeleton-highlight: rgba(9, 9, 11, 0.05); /* zinc-950 at 5%, tuned to light bg */
     color-scheme: light;
   }
 }
@@ -62,6 +64,81 @@ body {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
   border-radius: 4px;
+}
+
+/* Route-transition loading states (design 4.5: skeletons match the final
+   layout's shape, never generic spinners). Shimmer sweeps via transform on a
+   pseudo-element so the skeleton itself never repaints. */
+:where(.skeleton) {
+  background-color: var(--bg-subtle);
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, var(--skeleton-highlight), transparent);
+  animation: skeleton-shimmer 1.8s ease-in-out infinite;
+}
+
+/* Skeleton groups fade in column-by-column so the placeholder feels staged
+   rather than flashing on all at once. */
+.skeleton-in {
+  animation: skeleton-fade 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes skeleton-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes skeleton-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Thin indeterminate progress bar rendered by loading.tsx. Mounts the moment
+   a navigation starts and unmounts on completion, so it doubles as the
+   "navigation finished" signal. z-index scale: navbar 50, route overlay 60. */
+.route-progress {
+  position: fixed;
+  inset-x: 0;
+  top: 0;
+  z-index: 60;
+  height: 2px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.route-progress::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, transparent, var(--accent) 30%, var(--accent) 70%, transparent);
+  box-shadow: 0 0 8px var(--accent-glow);
+  animation: route-progress-slide 1.2s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+@keyframes route-progress-slide {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(250%);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
